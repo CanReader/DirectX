@@ -8,7 +8,7 @@
 #include <iostream>
 #include <memory>
 
-#include "IMG/resource.h"
+#include "resource.h"
 
 #include "Direct11.h"
 #include "Graphics.h"

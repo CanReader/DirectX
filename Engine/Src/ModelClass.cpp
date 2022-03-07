@@ -100,7 +100,7 @@ void ModelClass::RotateX(float Angle)
 
 void ModelClass::RotateY(float Angle)
 {
-    RotationMatrix = XMMatrixRotationY(Angle * XM_PI / 180);
+    RotationMatrix = XMMatrixRotationY(Angle * XM_PI / 180)*XMMatrixTranslation(0,0,2);
 }
 
 void ModelClass::RotateZ(float Angle)
@@ -146,43 +146,44 @@ ID3D11ShaderResourceView* ModelClass::GetTexture()
 bool ModelClass::CreateTestCube(ID3D11Device* dev)
 {
 
+    XMFLOAT3 Normal = XMFLOAT3(0,0,-1);
     Vertex vertices[] =
     {
         //Front face
-        {XMFLOAT3(-0.5f, -0.5f, 1) ,XMFLOAT2(1,1),XMFLOAT3(0,0,-1.0f)}, //Top left 0
-        {XMFLOAT3(-0.5f,  0.5f, 1)  ,XMFLOAT2(1,0),XMFLOAT3(0,0,-1.0f)}, //Bottom left 1
-        {XMFLOAT3(0.5f,  0.5f,  1) ,XMFLOAT2(0,0),XMFLOAT3(0,0,-1.0f)}, //Bottom right 2
-        {XMFLOAT3(0.5f, -0.5f,  1)  ,XMFLOAT2(0,1),XMFLOAT3(0,0,-1.0f)}, //Top right 3
+        {XMFLOAT3(-0.5f,-0.5f,+1) ,XMFLOAT2(1,1),Normal}, //Top left 0
+        {XMFLOAT3(-0.5f,+0.5f,+1) ,XMFLOAT2(1,0),Normal}, //Bottom left 1
+        {XMFLOAT3(+0.5f,+0.5f,+1) ,XMFLOAT2(0,0),Normal}, //Bottom right 2
+        {XMFLOAT3(+0.5f,-0.5f,+1) ,XMFLOAT2(0,1),Normal}, //Top right 3
 
         //Back face
-        {XMFLOAT3(-0.5f, -0.5f, 2) ,XMFLOAT2(1,1),XMFLOAT3(0,0,-1.0f)}, //Top left 4 
-        {XMFLOAT3(-0.5f,  0.5f, 2)  ,XMFLOAT2(1,0),XMFLOAT3(0,0,-1.0f)}, //Bottom left 5
-        {XMFLOAT3(0.5f,  0.5f, 2) ,XMFLOAT2(0,0),XMFLOAT3(0,0,-1.0f)}, //Bottom right 6
-        {XMFLOAT3(0.5f, -0.5f, 2)  ,XMFLOAT2(0,1),XMFLOAT3(0,0,-1.0f)}, //Top right 7
+        {XMFLOAT3(-0.5f,-0.5f,+2) ,XMFLOAT2(1,1),Normal}, //Top left 4 
+        {XMFLOAT3(-0.5f,+0.5f,+2) ,XMFLOAT2(1,0),Normal}, //Bottom left 5
+        {XMFLOAT3(+0.5f,+0.5f,+2) ,XMFLOAT2(0,0),Normal}, //Bottom right 6
+        {XMFLOAT3(+0.5f,-0.5f,+2) ,XMFLOAT2(0,1),Normal}, //Top right 7
 
         //Left face
-        {XMFLOAT3(-0.5f, -0.5f, 1) ,XMFLOAT2(0,1),XMFLOAT3(0,0,-1.0f)}, //Top right 8
-        {XMFLOAT3(-0.5f,  0.5f, 1)  ,XMFLOAT2(0,0),XMFLOAT3(0,0,-1.0f)}, //Bottom right 9
-        {XMFLOAT3(-0.5f,  0.5f, 2)  ,XMFLOAT2(1,0),XMFLOAT3(0,0,-1.0f)}, //Bottom left 10
-        {XMFLOAT3(-0.5f, -0.5f, 2) ,XMFLOAT2(1,1),XMFLOAT3(0,0,-1.0f)}, //Top left 11
+        {XMFLOAT3(-0.5f,-0.5f,+1) ,XMFLOAT2(0,1),Normal}, //Top right 8
+        {XMFLOAT3(-0.5f,+0.5f,+1) ,XMFLOAT2(0,0),Normal}, //Bottom right 9
+        {XMFLOAT3(-0.5f,+0.5f,+2) ,XMFLOAT2(1,0),Normal}, //Bottom left 10
+        {XMFLOAT3(-0.5f,-0.5f,+2) ,XMFLOAT2(1,1),Normal}, //Top left 11
 
         //Right face
-        {XMFLOAT3(0.5f, -0.5f,  1)  ,XMFLOAT2(0,1),XMFLOAT3(0,0,-1.0f)}, //Top left 12
-        {XMFLOAT3(0.5f,  0.5f,  1) ,XMFLOAT2(0,0),XMFLOAT3(0,0,-1.0f)}, //Bottom left 13
-        {XMFLOAT3(0.5f,  0.5f, 2) ,XMFLOAT2(1,0),XMFLOAT3(0,0,-1.0f)}, //Bottom right 14
-        {XMFLOAT3(0.5f, -0.5f, 2)  ,XMFLOAT2(1,1),XMFLOAT3(0,0,-1.0f)}, //Top right 15
+        {XMFLOAT3(+0.5f,-0.5f,+1) ,XMFLOAT2(0,1),Normal}, //Top left 12
+        {XMFLOAT3(+0.5f,+0.5f,+1) ,XMFLOAT2(0,0),Normal}, //Bottom left 13
+        {XMFLOAT3(+0.5f,+0.5f,+2) ,XMFLOAT2(1,0),Normal}, //Bottom right 14
+        {XMFLOAT3(+0.5f,-0.5f,+2) ,XMFLOAT2(1,1),Normal}, //Top right 15
 
         //Bottom face
-        {XMFLOAT3(-0.5f, -0.5f, 2) ,XMFLOAT2(0,1),XMFLOAT3(0,0,-1.0f)}, //Top left 16
-        {XMFLOAT3(-0.5f, -0.5f, 1) ,XMFLOAT2(0,0),XMFLOAT3(0,0,-1.0f)}, //Bottom left 17
-        {XMFLOAT3(0.5f, -0.5f,  1)  ,XMFLOAT2(1,0),XMFLOAT3(0,0,-1.0f)}, //Bottom right 18
-        {XMFLOAT3(0.5f, -0.5f, 2)  ,XMFLOAT2(1,1),XMFLOAT3(0,0,-1.0f)}, //Top right 19
+        {XMFLOAT3(-0.5f,-0.5f,+2) ,XMFLOAT2(0,1),Normal}, //Top left 16
+        {XMFLOAT3(-0.5f,-0.5f,+1) ,XMFLOAT2(0,0),Normal}, //Bottom left 17
+        {XMFLOAT3(+0.5f,-0.5f,+1) ,XMFLOAT2(1,0),Normal}, //Bottom right 18
+        {XMFLOAT3(+0.5f,-0.5f,+2) ,XMFLOAT2(1,1),Normal}, //Top right 19
 
         //Top face
-        {XMFLOAT3(-0.5f, 0.5f, 2) ,XMFLOAT2(1,1),XMFLOAT3(0,0,-1.0f)}, //Top left 20
-        {XMFLOAT3(-0.5f, 0.5f, 1) ,XMFLOAT2(1,0),XMFLOAT3(0,0,-1.0f)}, //Bottom left 21
-        {XMFLOAT3(0.5f, 0.5f,  1)  ,XMFLOAT2(0,0),XMFLOAT3(0,0,-1.0f)}, //Bottom right 22
-        {XMFLOAT3(0.5f, 0.5f, 2)  ,XMFLOAT2(0,1),XMFLOAT3(0,0,-1.0f)}, //Top right 23
+        {XMFLOAT3(-0.5f,+0.5f,+2) ,XMFLOAT2(1,1),Normal}, //Top left 20
+        {XMFLOAT3(-0.5f,+0.5f,+1) ,XMFLOAT2(1,0),Normal}, //Bottom left 21
+        {XMFLOAT3(+0.5f,+0.5f,+1) ,XMFLOAT2(0,0),Normal}, //Bottom right 22
+        {XMFLOAT3(+0.5f,+0.5f,+2) ,XMFLOAT2(0,1),Normal}, //Top right 23
 
     };
 

@@ -6,7 +6,7 @@
 #include <xnamath.h>
 #include <D3Dcompiler.h>
 #include <filesystem>
-#include "LightClass.h"
+#include "Light/LightClass.h"
 
 #include "Debugger.h"
 
@@ -26,9 +26,9 @@ private:
 	struct LightShaderBuffer
 	{
 		XMFLOAT3 Direction;
+		float padding;
 		XMFLOAT4 Ambient;
 		XMFLOAT4 DiffuseColor;
-		float padding;
 	};
 
 public:

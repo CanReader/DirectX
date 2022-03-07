@@ -141,6 +141,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3dcompiler.lib;d3d10.lib;d3d11.lib;d3dx11.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Engine\Vendors\Directx-SDK\Lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -163,25 +164,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="Src\CameraClass.cpp" />
     <ClCompile Include="Src\CoreWindow.cpp" />
     <ClCompile Include="Src\Direct11.cpp" />
     <ClCompile Include="Src\Graphics.cpp" />
     <ClCompile Include="Src\InputManager.cpp" />
-    <ClCompile Include="Src\LightClass.cpp" />
+    <ClCompile Include="Src\Light\LightClass.cpp" />
     <ClCompile Include="Src\Log.cpp" />
     <ClCompile Include="Src\ModelClass.cpp" />
     <ClCompile Include="Src\ShaderClass.cpp" />
     <ClCompile Include="Src\TextureClass.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SpotLight.h" />
     <ClInclude Include="Src\CameraClass.h" />
     <ClInclude Include="Src\CoreWindow.h" />
     <ClInclude Include="Src\Debugger.h" />
     <ClInclude Include="Src\Direct11.h" />
     <ClInclude Include="Src\Graphics.h" />
     <ClInclude Include="Src\InputManager.h" />
-    <ClInclude Include="Src\LightClass.h" />
+    <ClInclude Include="Src\Light\LightClass.h" />
     <ClInclude Include="Src\Log.h" />
     <ClInclude Include="Src\ModelClass.h" />
     <ClInclude Include="Src\ShaderClass.h" />

@@ -30,7 +30,7 @@
     <ClCompile Include="Src\InputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\LightClass.cpp">
+    <ClCompile Include="Src\Light\LightClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\Log.cpp">
@@ -43,6 +43,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Src\TextureClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpotLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,7 +68,7 @@
     <ClInclude Include="Src\InputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\LightClass.h">
+    <ClInclude Include="Src\Light\LightClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\Log.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Src\TextureClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpotLight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
