@@ -10,10 +10,10 @@ cbuffer MatrixBuffer : register(b0)
 
 cbuffer LightBuffer : register(b1)
 {
-    float4 diffuse;
-    float4 ambient;
     float3 direction;
     float padding;
+    float4 ambient;
+    float4 diffuse;
 };
 
 struct VertexInput
@@ -47,22 +47,24 @@ PixelInput VS(VertexInput inp)
     return Output;
 }
 
+float4 CalculateDirectional(float4 Texture, float3 normal)
+{
+    float3 dir = -direction;
+
+    float4 color = Texture * ambient;
+    color += saturate(dot(dir, normal) * diffuse * Texture);
+
+    return color;
+}
+
 float4 PS(PixelInput inp) : SV_TARGET
 {
-    float4 Texture;
-    float3 dir;
-    float  inten;
     float4 color;
 
-    Texture = ColorMap.Sample(colorSampler, inp.tex);
+    color = CalculateDirectional(ColorMap.Sample(colorSampler, inp.tex), inp.normal);
 
-    dir = -direction;
-
-    inten = saturate(dot(inp.normal,dir));
-    
-    color = diffuse * inten;
-
-
-    return Texture * color;
+    return color;
 
 }
+
+
