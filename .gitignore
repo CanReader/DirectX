@@ -3,18 +3,25 @@
 
 # Compiled Object files
 *.slo
+*.suo
 *.lo
 *.o
 *.obj
+*.recipe
+*.ilk
+*.log
+*.pdb
+*.tlog
+*.idb
 
 # Precompiled Headers
 *.gch
 *.pch
+*.ipch
 
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
 
 # Fortran module files
 *.mod
@@ -24,7 +31,6 @@
 *.lai
 *.la
 *.a
-*.lib
 
 # Executables
 *.exe
