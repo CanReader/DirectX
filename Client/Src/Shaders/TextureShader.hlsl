@@ -8,12 +8,24 @@ cbuffer MatrixBuffer : register(b0)
     matrix Projection;
 };
 
-cbuffer LightBuffer : register(b1)
+cbuffer DirectionalLightBuffer : register(b1)
 {
-    float3 direction;
-    float padding;
-    float4 ambient;
-    float4 diffuse;
+    float3 DLB_direction;
+    float DLB_padding;
+    float4 DLB_ambient;
+    float4 DLB_diffuse;
+};
+
+cbuffer PointLightBuffer : register(b2)
+{
+    float3 PLB_direction;
+    float padding1;
+    float4 PLB_ambient;
+    float4 PLB_diffuse;
+    float3 PLB_position;
+    float padding2;
+    float3 PLB_att;
+    float padding3;
 };
 
 struct VertexInput
@@ -49,12 +61,17 @@ PixelInput VS(VertexInput inp)
 
 float4 CalculateDirectional(float4 Texture, float3 normal)
 {
-    float3 dir = -direction;
+    float3 dir = -DLB_direction;
 
-    float4 color = Texture * ambient;
-    color += saturate(dot(dir, normal) * diffuse * Texture);
+    float4 color = Texture * DLB_ambient;
+    color += saturate(dot(dir, normal) * DLB_diffuse * Texture);
 
     return color;
+}
+
+float4 CalculatePoint(float4 Texture, float3 normal)
+{
+    return Texture;
 }
 
 float4 PS(PixelInput inp) : SV_TARGET
@@ -62,6 +79,8 @@ float4 PS(PixelInput inp) : SV_TARGET
     float4 color;
 
     color = CalculateDirectional(ColorMap.Sample(colorSampler, inp.tex), inp.normal);
+
+    //color = CalculatePoint(ColorMap.Sample(colorSampler, inp.tex), inp.normal);
 
     return color;
 

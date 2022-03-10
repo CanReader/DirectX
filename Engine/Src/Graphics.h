@@ -6,6 +6,7 @@
 #include "Direct11.h"
 #include "CameraClass.h"
 #include "ModelClass.h"
+#include "Light/PointLight.h"
 
 #define IterateModels(Models) for(auto& i : Models)
 

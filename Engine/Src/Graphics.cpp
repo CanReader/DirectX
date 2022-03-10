@@ -20,7 +20,7 @@ bool Graphics::Initialize(HWND hWnd, int Width, int Height, bool FullScreen)
 	Models.push_back(new ModelClass((LPCSTR)"Src/IMG/braynzar.jpg", XMFLOAT3(-0.5, 0, 0)));
 	Models.push_back(new ModelClass((LPCSTR)"Src/IMG/anan.jpg", XMFLOAT3(0.5, 0, 0)));
 
-	Light = new LightClass(XMFLOAT3(0.25f,0.5f,-1.0f), XMFLOAT4(0.2f,0.2f,0.2f, 1.0f), XMFLOAT4(1, 1, 1, 1));
+	Light = new PointLight(XMFLOAT3(0.25f,0.5f,-1.0f), XMFLOAT4(0.2f,0.2f,0.2f, 1.0f), XMFLOAT4(1, 1, 1, 1));
 
 	if (!d3d->InitializeDirect3D(hWnd, Width, Height, FullScreen))
 		return false;

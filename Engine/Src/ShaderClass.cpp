@@ -107,7 +107,6 @@ bool ShaderClass::CreateShaders(LPCSTR ShaderFile)
 
 	END(hr)
 
-		//Create input layout
 		D3D11_INPUT_ELEMENT_DESC iedesc[] =
 	{
 
@@ -147,7 +146,7 @@ bool ShaderClass::CreateConstantBufferAndSampler()
 
 	D3D11_BUFFER_DESC ldesc;
 	ldesc.Usage = D3D11_USAGE_DYNAMIC;
-	ldesc.ByteWidth = sizeof(LightShaderBuffer);
+	ldesc.ByteWidth = sizeof(LightClass::Buffer);
 	ldesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	ldesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	ldesc.MiscFlags = 0;
@@ -195,11 +194,9 @@ void ShaderClass::SetShaderParameters()
 	
 	_devcon->Map(LightBuffer,0,D3D11_MAP_WRITE_DISCARD,0,&map);
 
-	LightShaderBuffer* lbuffr = (LightShaderBuffer*)map.pData;
+	auto* lbuffr = (LightClass::Buffer*)map.pData;
 
-	lbuffr->Direction = Light->GetDirection();
-	lbuffr->Ambient = Light->GetAmbient();
-	lbuffr->DiffuseColor = Light->GetDiffuse();
+	Light->SetBuffer(*lbuffr);
 
 	_devcon->Unmap(LightBuffer,0);
 }

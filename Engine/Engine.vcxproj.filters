@@ -45,7 +45,7 @@
     <ClCompile Include="Src\TextureClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SpotLight.cpp">
+    <ClCompile Include="Src\Light\PointLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,7 +83,7 @@
     <ClInclude Include="Src\TextureClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SpotLight.h">
+    <ClInclude Include="Src\Light\PointLight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

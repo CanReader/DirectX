@@ -23,14 +23,6 @@ private:
 		XMMATRIX projection;
 	};
 
-	struct LightShaderBuffer
-	{
-		XMFLOAT3 Direction;
-		float padding;
-		XMFLOAT4 Ambient;
-		XMFLOAT4 DiffuseColor;
-	};
-
 public:
 	ShaderClass();
 	ShaderClass(LPCSTR File);
@@ -50,7 +42,7 @@ private:
 	bool CreateShaders(LPCSTR);
 	bool CreateConstantBufferAndSampler();
 
-	void SetShaderParameters();
+	void SetShaderParameters();	
 
 private:
 	LPCSTR ShaderFile;
@@ -71,4 +63,4 @@ private:
 };
 
 
-#endif // !1
+#endif

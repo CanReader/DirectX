@@ -164,7 +164,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="SpotLight.cpp" />
+    <ClCompile Include="Src\Light\PointLight.cpp" />
     <ClCompile Include="Src\CameraClass.cpp" />
     <ClCompile Include="Src\CoreWindow.cpp" />
     <ClCompile Include="Src\Direct11.cpp" />
@@ -177,7 +177,7 @@
     <ClCompile Include="Src\TextureClass.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SpotLight.h" />
+    <ClInclude Include="Src\Light\PointLight.h" />
     <ClInclude Include="Src\CameraClass.h" />
     <ClInclude Include="Src\CoreWindow.h" />
     <ClInclude Include="Src\Debugger.h" />
