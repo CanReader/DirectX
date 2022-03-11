@@ -2,6 +2,7 @@
 
 using namespace std;
 
+//int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow)
 int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine,int nCmdShow)
 {
 	int ReturnValue = 0;

@@ -29,7 +29,7 @@ public:
 	LightClass(XMFLOAT3, XMFLOAT4, XMFLOAT4);
 	LightClass(LightClass&);
 
-	virtual void SetBuffer(LightClass::Buffer&);
+	virtual void SetBuffer(D3D11_MAPPED_SUBRESOURCE&);
 	
 	void SetDirection(XMFLOAT3);
 	void SetAmbient(XMFLOAT4);
@@ -41,7 +41,7 @@ public:
 	XMFLOAT4 GetAmbient();
 
 
-private:
+protected:
 	TYPE_LIGHT LightType;
 
 	XMFLOAT3 Direction;

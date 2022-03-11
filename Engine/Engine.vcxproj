@@ -84,7 +84,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)Bin</OutDir>
     <IntDir>$(SolutionDir)Intermediate</IntDir>
-    <IncludePath>$(ProjectDir)Vendors\DirectX-SDK\Include;$(ProjectDir)Vendors\spdlog-1.9.2\include;$(ProjectDir)Vendors\DirectXTK\Inc;$(ProjectDir)Vendors\DirectXTex\DirectXTex;$(ProjectDir)Vendors\DirectXTex\Texconv;$(ProjectDir)Vendors\DirectXTex\WICTextureLoader;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Vendors\DirectX-SDK\Include;$(ProjectDir)Vendors\spdlog-1.9.2\include;$(ProjectDir)Vendors\DirectXTK\Inc;$(IncludePath)</IncludePath>
     <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</ExternalIncludePath>
     <LibraryPath>$(ProjectDir)Vendors\DirectX-SDK\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
@@ -92,7 +92,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)Bin</OutDir>
     <IntDir>$(SolutionDir)Intermediate</IntDir>
-    <IncludePath>$(ProjectDir)Vendors\DirectX-SDK\Include;$(ProjectDir)Vendors\spdlog-1.9.2\include;$(ProjectDir)Vendors\DirectXTK\Inc;$(ProjectDir)Vendors\DirectXTex\DirectXTex;$(ProjectDir)Vendors\DirectXTex\Texconv;$(ProjectDir)Vendors\DirectXTex\WICTextureLoader;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Vendors\DirectX-SDK\Include;$(ProjectDir)Vendors\spdlog-1.9.2\include;$(ProjectDir)Vendors\DirectXTK\Inc;$(IncludePath)</IncludePath>
     <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</ExternalIncludePath>
     <LibraryPath>$(ProjectDir)Vendors\DirectX-SDK\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>

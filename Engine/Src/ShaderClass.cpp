@@ -30,7 +30,6 @@ bool ShaderClass::Initialize(ID3D11Device* dev, ID3D11DeviceContext* devcon)
 			return false;
 	}
 
-	//Create Constant buffer
 	if (!CreateConstantBufferAndSampler())
 		return false;
 
@@ -146,7 +145,7 @@ bool ShaderClass::CreateConstantBufferAndSampler()
 
 	D3D11_BUFFER_DESC ldesc;
 	ldesc.Usage = D3D11_USAGE_DYNAMIC;
-	ldesc.ByteWidth = sizeof(LightClass::Buffer);
+	ldesc.ByteWidth = sizeof(PointLight::Buffer);
 	ldesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	ldesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	ldesc.MiscFlags = 0;
@@ -194,9 +193,7 @@ void ShaderClass::SetShaderParameters()
 	
 	_devcon->Map(LightBuffer,0,D3D11_MAP_WRITE_DISCARD,0,&map);
 
-	auto* lbuffr = (LightClass::Buffer*)map.pData;
-
-	Light->SetBuffer(*lbuffr);
+	Light->SetBuffer(map);
 
 	_devcon->Unmap(LightBuffer,0);
 }

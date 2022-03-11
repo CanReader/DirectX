@@ -7,6 +7,7 @@
 #include <D3Dcompiler.h>
 #include <filesystem>
 #include "Light/LightClass.h"
+#include "Light/PointLight.h"
 
 #include "Debugger.h"
 

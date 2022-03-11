@@ -20,7 +20,7 @@ bool Graphics::Initialize(HWND hWnd, int Width, int Height, bool FullScreen)
 	Models.push_back(new ModelClass((LPCSTR)"Src/IMG/braynzar.jpg", XMFLOAT3(-0.5, 0, 0)));
 	Models.push_back(new ModelClass((LPCSTR)"Src/IMG/anan.jpg", XMFLOAT3(0.5, 0, 0)));
 
-	Light = new PointLight(XMFLOAT3(0.25f,0.5f,-1.0f), XMFLOAT4(0.2f,0.2f,0.2f, 1.0f), XMFLOAT4(1, 1, 1, 1));
+	Light = new PointLight(XMFLOAT4(0.1f,0.1f,0.1f,1),XMFLOAT4(1,1,1,1),XMFLOAT3(0,0,0),100.0f);
 
 	if (!d3d->InitializeDirect3D(hWnd, Width, Height, FullScreen))
 		return false;
@@ -73,9 +73,10 @@ void Graphics::UpdateScene(float dt)
 	ModelClass* mo = Models[1];
 	ModelClass* mt = Models[0];
 
-	Light->SetAmbient(XMFLOAT4(0.001f,0.001f,0.001f,1));
-	Light->SetDirection(XMFLOAT3(0.25f,sin(dt),-1));
+	PointLight* pl = (PointLight*)Light;
 
+	mt->Translate(XMFLOAT3(sin(dt)*3, sin(dt), sin(dt) * 2));
+	pl->SetPosition(XMFLOAT3(-sin(dt)*3, -sin(dt), -sin(dt) * 2));
 }
 
 void Graphics::RenderTestCube(ModelClass& model, int Dir)

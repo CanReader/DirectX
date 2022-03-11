@@ -43,11 +43,13 @@ XMFLOAT4 LightClass::GetAmbient()
 	return Ambient;
 }
 
-void LightClass::SetBuffer(LightClass::Buffer& lbuffr)
+void LightClass::SetBuffer(D3D11_MAPPED_SUBRESOURCE& map)
 {
-	lbuffr.Direction = Direction;
-	lbuffr.Ambient = Ambient;
-	lbuffr.DiffuseColor = Diffuse;
+	auto* lbuffr = (Buffer*)map.pData;
+
+	lbuffr->Direction = Direction;
+	lbuffr->Ambient = Ambient;
+	lbuffr->DiffuseColor = Diffuse;
 }
 
 XMFLOAT4 LightClass::GetDiffuse()
