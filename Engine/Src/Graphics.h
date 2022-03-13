@@ -7,6 +7,7 @@
 #include "CameraClass.h"
 #include "ModelClass.h"
 #include "Light/PointLight.h"
+#include "Input/InputClass.h"
 
 #define IterateModels(Models) for(auto& i : Models)
 
@@ -48,6 +49,7 @@ private:
 private:
 	Direct11* d3d = nullptr;
 	CameraClass* Camera;
+	InputClass* inp;
 
 	LightClass* Light;
 };

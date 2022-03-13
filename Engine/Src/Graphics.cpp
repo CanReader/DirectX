@@ -27,7 +27,12 @@ bool Graphics::Initialize(HWND hWnd, int Width, int Height, bool FullScreen)
 
 	IterateModels(Models)
 		if (!i->Initialize(d3d->GetDevice(), d3d->GetDeviceContext()))
-			return false;
+			std::cout << "Failed to create a model";
+	
+	inp = new InputClass();
+
+	if (!inp->InitDevices(hWnd, (HINSTANCE)GetModuleHandle(NULL)))
+		return false;
 
 	DX_INFO("Direct3d is initialized!");
 
@@ -63,6 +68,12 @@ void Graphics::Shutdown()
 
 	IterateModels(Models)
 		delete i;
+
+	delete Light;
+	Light = 0;
+
+	delete inp;
+	inp = 0;
 }
 
 void Graphics::UpdateScene(float dt)
@@ -75,8 +86,20 @@ void Graphics::UpdateScene(float dt)
 
 	PointLight* pl = (PointLight*)Light;
 
-	mt->Translate(XMFLOAT3(sin(dt)*3, sin(dt), sin(dt) * 2));
-	pl->SetPosition(XMFLOAT3(-sin(dt)*3, -sin(dt), -sin(dt) * 2));
+	pl->SetPosition(XMFLOAT3(0,0.5,-1));
+
+	if (inp->IsPressed(DIK_W))
+		mo->RotateX(dt*100);
+	if (inp->IsPressed(DIK_S))
+		mo->RotateX(-dt*100);
+	if (inp->IsPressed(DIK_A))
+		mt->RotateY(dt*100);
+	if (inp->IsPressed(DIK_D))
+		mt->RotateY(-dt*100);
+
+	if (inp->IsPressed(DIK_LALT) && inp->IsPressed(DIK_F4))
+		PostQuitMessage(0);
+
 }
 
 void Graphics::RenderTestCube(ModelClass& model, int Dir)

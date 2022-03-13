@@ -14,7 +14,6 @@
 #include "Graphics.h"
 #include "Debugger.h"
 
-
 typedef struct Location
 {
 	int X;
