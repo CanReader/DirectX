@@ -3,6 +3,7 @@
 
 #include <string>
 #include <functional>
+#include <sstream>
 
 enum class EventType
 {
@@ -23,6 +24,12 @@ enum EventCategory
 	EventCategoryMouseButton,
 };
 
+#define EVENT_TYPE(type) static EventType GetStaticType(){return EventType::##type;}\
+                                  virtual EventType GetType() const override { return GetStaticType(); }\
+								virtual const char* GetName() const override { return #type; }
+
+#define EVENT_CATEGORY(category) virtual int GetCategoryFlags() const override {return category;}
+
 class __declspec(dllexport) Event 
 {
 	friend class EventDispatcher;
@@ -31,6 +38,7 @@ public:
 	 virtual EventType GetType() const = 0;
 	 virtual const char* GetName() const = 0;
 	 virtual int GetCategoryFlags() const = 0;
+	 virtual std::string ToString() const { return GetName(); }
 
 	 inline bool IsInCategory(EventCategory category)
 	 {
@@ -44,10 +52,7 @@ class EventDispatcher
 {
 public:
 	EventDispatcher(Event& event)
-		: m_Event(event)
-	{
-	}
-
+		: m_Event(event){}
 
 	template<typename T, typename F>
 	bool Dispatch(const F& func)
