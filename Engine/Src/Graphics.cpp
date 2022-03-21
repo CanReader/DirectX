@@ -86,20 +86,29 @@ void Graphics::UpdateScene(float dt)
 
 	PointLight* pl = (PointLight*)Light;
 
-	pl->SetPosition(XMFLOAT3(0,0.5,-1));
+	pl->SetPosition(XMFLOAT3(0,-1,-1));
 
 	if (inp->IsPressed(DIK_W))
-		mo->RotateX(dt*100);
+		mo->Translate(XMFLOAT3(0,dt,0));
 	if (inp->IsPressed(DIK_S))
-		mo->RotateX(-dt*100);
+		mo->Translate(XMFLOAT3(0,-dt,0));
 	if (inp->IsPressed(DIK_A))
-		mt->RotateY(dt*100);
+		mo->Translate(XMFLOAT3(-dt,0,0));
 	if (inp->IsPressed(DIK_D))
-		mt->RotateY(-dt*100);
+		mo->Translate(XMFLOAT3(dt,0,0));
+	if (inp->IsPressed(DIK_SPACE))
+		mo->Translate(XMFLOAT3(0, 0, 0));
+	if (inp->IsPressed(DIK_UPARROW))
+		mo->RotateX(-dt*100);
+	if (inp->IsPressed(DIK_DOWNARROW))
+		mo->RotateX(dt*100);
+	if (inp->IsPressed(DIK_RIGHTARROW))
+		mo->RotateY(dt*100);
+	if (inp->IsPressed(DIK_LEFTARROW))
+		mo->RotateY(-dt*100);
 
 	if (inp->IsPressed(DIK_LALT) && inp->IsPressed(DIK_F4))
 		PostQuitMessage(0);
-
 }
 
 void Graphics::RenderTestCube(ModelClass& model, int Dir)

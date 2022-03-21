@@ -13,18 +13,23 @@ public:
 	CameraClass(const CameraClass&);
 	~CameraClass();
 
-	void SetPosition(XMFLOAT3);
+	void SetPosition(XMVECTOR);
 	void SetRotation(XMFLOAT3);
 
-	XMFLOAT3 GetPosition();
+	XMVECTOR GetPosition();
 	XMFLOAT3 GetRotation();
 
 	void SetView(XMMATRIX&);
 	XMMATRIX GetView();
 
+	void Update();
+
 	void Render();
 private:
-	XMFLOAT3 Position;
+	XMVECTOR Target;
+	XMVECTOR Up;
+
+	XMVECTOR Position;
 	XMFLOAT3 Rotation;
 	XMMATRIX ViewMatrix;
 

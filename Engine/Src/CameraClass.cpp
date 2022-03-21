@@ -1,15 +1,16 @@
 #include "CameraClass.h"
 
-CameraClass::CameraClass() : Position{ XMFLOAT3(0,0,0) }, Rotation{XMFLOAT3(0,0,0)}
+CameraClass::CameraClass() : Position(XMVectorSet(0,0,0,0) ),
+ Target(XMVectorSet(0, 0, 0, 0)), Rotation{XMFLOAT3(0,0,0)}
 {
-ViewMatrix = XMMatrixLookAtLH(XMVectorSet(0,0,-1.5f,0), XMVectorSet(0, 0, 0, 0), XMVectorSet(0, 1.0f, 0, 0));
+ViewMatrix = XMMatrixLookAtLH(Position, Target, XMVectorSet(0, 1.0f, 0, 0));
 }
 
 CameraClass::~CameraClass()
 {
 }
 
-void CameraClass::SetPosition(XMFLOAT3 Position)
+void CameraClass::SetPosition(XMVECTOR Position)
 {
 	this->Position = Position;
 }
@@ -19,7 +20,7 @@ void CameraClass::SetRotation(XMFLOAT3 NewRotation)
 	this->Rotation = Rotation;
 }
 
-XMFLOAT3 CameraClass::GetPosition()
+XMVECTOR CameraClass::GetPosition()
 {
 	return Position;
 }
@@ -37,6 +38,10 @@ void CameraClass::SetView(XMMATRIX& view)
 XMMATRIX CameraClass::GetView()
 {
 	return ViewMatrix;
+}
+
+void CameraClass::Update()
+{
 }
 
 void CameraClass::Render()
