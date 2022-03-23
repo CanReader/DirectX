@@ -37,7 +37,7 @@ bool ModelClass::Initialize(ID3D11Device* dev, ID3D11DeviceContext* devcon)
 
 void ModelClass::Render()
 {
-    //World = TranslationMatrix * RotationMatrix * ScalingMatrix;
+    World =  TranslationMatrix * RotationMatrix;
 
     unsigned int stride = sizeof(Vertex);
     unsigned int offset = 0;
@@ -80,7 +80,7 @@ XMFLOAT3 ModelClass::GetPos()
 
 void ModelClass::Translate(XMFLOAT3 Position)
 {
-    World *= XMMatrixTranslation(Position.x/100000,Position.y/100000,Position.z/100000);
+    TranslationMatrix = XMMatrixTranslation(Position.x,Position.y,Position.z);
 }
 
 void ModelClass::Translate(FLOAT x, FLOAT y, FLOAT z)
@@ -90,28 +90,27 @@ void ModelClass::Translate(FLOAT x, FLOAT y, FLOAT z)
 
 void ModelClass::RotatePitchYawRoll(FLOAT Pitch, FLOAT Yaw, FLOAT Roll)
 {
-    RotationMatrix = XMMatrixRotationRollPitchYaw(Pitch, Yaw, Roll);
+    World = XMMatrixRotationRollPitchYaw(Pitch, Yaw, Roll);
 }
 
 void ModelClass::RotateX(float Angle)
 {
-    World *= XMMatrixRotationX(Angle * XM_PI / 180 / 100000);
-   // World *= XMMatrixRotationX(Angle * XM_PI / 180/100000);
+    RotationMatrix = XMMatrixRotationX(Angle * XM_PI / 180 / 1000);
 }
 
 void ModelClass::RotateY(float Angle)
 {
-    World *= XMMatrixRotationY(Angle * XM_PI / 180/100000);
+    RotationMatrix = XMMatrixRotationY(Angle * XM_PI / 180 / 1000);
 }
 
 void ModelClass::RotateZ(float Angle)
 {
-    World *= XMMatrixRotationZ(Angle * XM_PI / 180/10000);
+    RotationMatrix = XMMatrixRotationZ(Angle * XM_PI / 180/10000);
 }
 
 void ModelClass::Scale(XMFLOAT3 Scale)
 {
-    World *= XMMatrixScaling(Scale.x, Scale.y, Scale.z);
+    ScalingMatrix = XMMatrixScaling(Scale.x, Scale.y, Scale.z);
 }
 
 void ModelClass::Scale(FLOAT value)

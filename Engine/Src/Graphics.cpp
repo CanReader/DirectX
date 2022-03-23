@@ -17,8 +17,8 @@ bool Graphics::Initialize(HWND hWnd, int Width, int Height, bool FullScreen)
 
 	Models = std::vector<ModelClass*>();
 
-	Models.push_back(new ModelClass((LPCSTR)"Src/IMG/braynzar.jpg", XMFLOAT3(-0.5, 0, 0)));
-	Models.push_back(new ModelClass((LPCSTR)"Src/IMG/anan.jpg", XMFLOAT3(0.5, 0, 0)));
+	Models.push_back(new ModelClass((LPCSTR)"Src/IMG/braynzar.jpg", XMFLOAT3(0, 0, 0)));
+	Models.push_back(new ModelClass((LPCSTR)"Src/IMG/anan.jpg", XMFLOAT3(0, 0, 0)));
 
 	Light = new PointLight(XMFLOAT4(0.1f,0.1f,0.1f,1),XMFLOAT4(1,1,1,1),XMFLOAT3(0,0,0),100.0f);
 
@@ -88,23 +88,8 @@ void Graphics::UpdateScene(float dt)
 
 	pl->SetPosition(XMFLOAT3(0,-1,-1));
 
-	if (inp->IsPressed(DIK_W))
-		mo->Translate(XMFLOAT3(0,dt,0));
+		mo->RotateY(dt*10000);
 	if (inp->IsPressed(DIK_S))
-		mo->Translate(XMFLOAT3(0,-dt,0));
-	if (inp->IsPressed(DIK_A))
-		mo->Translate(XMFLOAT3(-dt,0,0));
-	if (inp->IsPressed(DIK_D))
-		mo->Translate(XMFLOAT3(dt,0,0));
-	if (inp->IsPressed(DIK_SPACE))
-		mo->Translate(XMFLOAT3(0, 0, 0));
-	if (inp->IsPressed(DIK_UPARROW))
-		mo->RotateX(-dt*100);
-	if (inp->IsPressed(DIK_DOWNARROW))
-		mo->RotateX(dt*100);
-	if (inp->IsPressed(DIK_RIGHTARROW))
-		mo->RotateY(dt*100);
-	if (inp->IsPressed(DIK_LEFTARROW))
 		mo->RotateY(-dt*100);
 
 	if (inp->IsPressed(DIK_LALT) && inp->IsPressed(DIK_F4))
@@ -123,6 +108,14 @@ void Graphics::RenderTestCube(ModelClass& model, int Dir)
 	model.SetLighting(*Light);
 	model.SetMatrices(Matrices);
 	model.Render();
+
+std::cout << "----------------------------------------------World------------------------------------------------\n"
+<< model.GetWorld()._11 << " " << model.GetWorld()._12 << " " << model.GetWorld()._13 << " " << model.GetWorld()._14 << "\n"
+<< model.GetWorld()._21 << " " << model.GetWorld()._22 << " " << model.GetWorld()._23 << " " << model.GetWorld()._24 << "\n"
+<< model.GetWorld()._31 << " " << model.GetWorld()._32 << " " << model.GetWorld()._33 << " " << model.GetWorld()._34 << "\n"
+<< model.GetWorld()._41 << " " << model.GetWorld()._42 << " " << model.GetWorld()._43 << " " << model.GetWorld()._44 << "\n"
+"\n------------------------------------------------------------END------------------------------\n\n\n\n\n\n\n\n";
+
 }
 
 void Graphics::SetFullscreen(bool FullScren)

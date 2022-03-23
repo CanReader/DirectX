@@ -3,7 +3,7 @@
 CameraClass::CameraClass() : Position(XMVectorSet(0,0,0,0) ),
  Target(XMVectorSet(0, 0, 0, 0)), Rotation{XMFLOAT3(0,0,0)}
 {
-ViewMatrix = XMMatrixLookAtLH(Position, Target, XMVectorSet(0, 1.0f, 0, 0));
+ViewMatrix = XMMatrixLookAtLH(XMVectorSet(0, 2, -3, 0), XMVectorSet(0, 0, 0, 0), XMVectorSet(0, 1.0f, 0, 0));
 }
 
 CameraClass::~CameraClass()
