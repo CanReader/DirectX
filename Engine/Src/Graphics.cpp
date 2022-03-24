@@ -14,25 +14,18 @@ bool Graphics::Initialize(HWND hWnd, int Width, int Height, bool FullScreen)
 
 	d3d = new Direct11();
 	Camera = new CameraClass();
-
+	inp = new InputClass();
 	Models = std::vector<ModelClass*>();
 
-	Models.push_back(new ModelClass((LPCSTR)"Src/IMG/braynzar.jpg", XMFLOAT3(0, 0, 0)));
-	Models.push_back(new ModelClass((LPCSTR)"Src/IMG/anan.jpg", XMFLOAT3(0, 0, 0)));
-
-	Light = new PointLight(XMFLOAT4(0.1f,0.1f,0.1f,1),XMFLOAT4(1,1,1,1),XMFLOAT3(0,0,0),100.0f);
+	Models.push_back(new ModelClass((LPCSTR)"Src/IMG/anan.jpg"));
 
 	if (!d3d->InitializeDirect3D(hWnd, Width, Height, FullScreen))
 		return false;
-
-	IterateModels(Models)
-		if (!i->Initialize(d3d->GetDevice(), d3d->GetDeviceContext()))
-			std::cout << "Failed to create a model";
 	
-	inp = new InputClass();
-
 	if (!inp->InitDevices(hWnd, (HINSTANCE)GetModuleHandle(NULL)))
 		return false;
+	
+	Models[0]->Initialize(d3d->GetDevice(),d3d->GetDeviceContext());
 
 	DX_INFO("Direct3d is initialized!");
 
@@ -42,7 +35,7 @@ bool Graphics::Initialize(HWND hWnd, int Width, int Height, bool FullScreen)
 void Graphics::Render()
 {
 	d3d->BeginScene(0.529f, 0.807f, 0.921f, 0);
-
+	
 	static float t = 0.0f;
 	{
 		static DWORD dwTimeStart = 0;
@@ -52,8 +45,17 @@ void Graphics::Render()
 		t = (dwTimeCur - dwTimeStart) / 1000.0f;
 	}
 
-	UpdateScene(t);
+	XMMATRIX matrices[3] =
+	{
+		XMMatrixIdentity(),
+		Camera->GetView(),
+		d3d->GetProjection()
+	};
 
+	Models[0]->Render(matrices);
+
+	UpdateScene(t);
+	
 	d3d->EndScene();
 }
 
@@ -78,44 +80,10 @@ void Graphics::Shutdown()
 
 void Graphics::UpdateScene(float dt)
 {
-	RenderTestCube(*Models[1],0);
-	RenderTestCube(*Models[0], 1);
-
-	ModelClass* mo = Models[1];
-	ModelClass* mt = Models[0];
-
-	PointLight* pl = (PointLight*)Light;
-
-	pl->SetPosition(XMFLOAT3(0,-1,-1));
-
-		mo->RotateY(dt*10000);
-	if (inp->IsPressed(DIK_S))
-		mo->RotateY(-dt*100);
-
-	if (inp->IsPressed(DIK_LALT) && inp->IsPressed(DIK_F4))
-		PostQuitMessage(0);
 }
 
 void Graphics::RenderTestCube(ModelClass& model, int Dir)
 {
-	XMMATRIX Matrices[3] =
-	{
-		model.GetWorld(),
-		Camera->GetView(),
-		d3d->GetProjection()
-	};
-
-	model.SetLighting(*Light);
-	model.SetMatrices(Matrices);
-	model.Render();
-
-std::cout << "----------------------------------------------World------------------------------------------------\n"
-<< model.GetWorld()._11 << " " << model.GetWorld()._12 << " " << model.GetWorld()._13 << " " << model.GetWorld()._14 << "\n"
-<< model.GetWorld()._21 << " " << model.GetWorld()._22 << " " << model.GetWorld()._23 << " " << model.GetWorld()._24 << "\n"
-<< model.GetWorld()._31 << " " << model.GetWorld()._32 << " " << model.GetWorld()._33 << " " << model.GetWorld()._34 << "\n"
-<< model.GetWorld()._41 << " " << model.GetWorld()._42 << " " << model.GetWorld()._43 << " " << model.GetWorld()._44 << "\n"
-"\n------------------------------------------------------------END------------------------------\n\n\n\n\n\n\n\n";
-
 }
 
 void Graphics::SetFullscreen(bool FullScren)

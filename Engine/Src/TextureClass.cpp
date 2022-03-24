@@ -15,8 +15,6 @@ bool TextureClass::Initialize(ID3D11Device* dev, LPCSTR file)
 	info1.Format = DXGI_FORMAT_FROM_FILE;
 	info1.CpuAccessFlags = D3D11_CPU_ACCESS_READ;
 
-	//HRESULT hr = D3DX11CreateShaderResourceViewFromFile(dev,(LPCSTR)file,&info1,NULL,&Texture,NULL);
-
 	HRESULT hr = D3DX11CreateTextureFromFile(dev,(LPCSTR)file,NULL,NULL,&TextResource,NULL);
 
 	END(hr)

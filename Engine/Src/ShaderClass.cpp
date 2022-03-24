@@ -46,14 +46,15 @@ void ShaderClass::Shutdown()
 	ReleaseInterface(LightBuffer);
 }
 
-void ShaderClass::Render(int IndexNumber, ID3D11ShaderResourceView* text)
+void ShaderClass::Render(int IndexNumber, ID3D11ShaderResourceView* text, XMMATRIX* Matrices)
 {
+	this->Matrices = Matrices;
+
 	_devcon->IASetInputLayout(lay);
 
 	SetShaderParameters();
 
 	_devcon->VSSetConstantBuffers(0,1,&ConstantBuffer);
-	_devcon->PSSetConstantBuffers(0,1,&ConstantBuffer);
 	_devcon->PSSetConstantBuffers(1,1,&LightBuffer);
 	_devcon->VSSetShader(vs,NULL,0);
 	_devcon->PSSetShader(ps,NULL,0);
@@ -175,9 +176,14 @@ bool ShaderClass::CreateConstantBufferAndSampler()
 
 void ShaderClass::SetShaderParameters()
 {
+	float r = temp * XM_PI / 180;
+	Matrices[0] = XMMatrixSet(cos(r),0,-sin(r),0,0,1,0,0,sin(r),0,cos(r),0,0,0,0,1);
+
 	XMMATRIX world = XMMatrixTranspose(Matrices[0]);
 	XMMATRIX view = XMMatrixTranspose(Matrices[1]);
 	XMMATRIX proj = XMMatrixTranspose(Matrices[2]);
+
+	temp += 0.05;
 
 	D3D11_MAPPED_SUBRESOURCE map;
 
@@ -191,9 +197,9 @@ void ShaderClass::SetShaderParameters()
 
 	_devcon->Unmap(ConstantBuffer,0);
 	
-	_devcon->Map(LightBuffer,0,D3D11_MAP_WRITE_DISCARD,0,&map);
+	//_devcon->Map(LightBuffer,0,D3D11_MAP_WRITE_DISCARD,0,&map);
 
-	Light->SetBuffer(map);
+	//Light->SetBuffer(map);
 
-	_devcon->Unmap(LightBuffer,0);
+	//_devcon->Unmap(LightBuffer,0);
 }

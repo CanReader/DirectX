@@ -32,7 +32,7 @@ public:
 
 	bool Initialize(ID3D11Device*, ID3D11DeviceContext*);
 	void Shutdown();
-	void Render(int, ID3D11ShaderResourceView*);
+	void Render(int, ID3D11ShaderResourceView*, XMMATRIX*);
 
 	void SetMatrices(XMMATRIX[]);
 	void SetLight(LightClass&);
@@ -59,6 +59,8 @@ private:
 	ID3D11Buffer* ConstantBuffer;
 	ID3D11Buffer* LightBuffer;
 	ID3D11SamplerState* Sample;
+
+	float temp = 0.0f;
 
 	LightClass* Light;
 };
