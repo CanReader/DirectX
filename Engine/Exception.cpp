@@ -1,8 +1,8 @@
 #include "Exception.h"
 
-Exception::Exception(int line, const char* file) : line(line), file(file){}
+BaseException::BaseException(int line, const char* file) : line(line), file(file){}
 
-const char* Exception::what() const noexcept
+const char* BaseException::what() const noexcept
 {
 	std::ostringstream oss;
 	oss << GetType() << std::endl << GetOriginString();
@@ -12,22 +12,22 @@ const char* Exception::what() const noexcept
 	return whatbuffer.c_str();
 }
 
-const char* Exception::GetType() const noexcept
+const char* BaseException::GetType() const noexcept
 {
 	return "Exception";
 }
 
-int Exception::GetLine() const noexcept
+int BaseException::GetLine() const noexcept
 {
 	return line;
 }
 
-std::string& Exception::GetFile() const noexcept
+std::string& BaseException::GetFile() const noexcept
 {
 	return (std::string&)file;
 }
 
-std::string Exception::GetOriginString() const noexcept
+std::string BaseException::GetOriginString() const noexcept
 {
 	std::ostringstream oss;
 	oss << "[File] " << file << std::endl << "[Line] " << line;
