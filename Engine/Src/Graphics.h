@@ -37,8 +37,6 @@ public:
 
 	void UpdateScene(float dt);
 
-	void RenderTestCube(ModelClass&,int);
-
 	void SetFullscreen(bool);
 
 private:

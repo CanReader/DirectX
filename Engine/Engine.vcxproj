@@ -164,6 +164,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\BaseException.cpp" />
     <ClCompile Include="Src\Input\InputClass.cpp" />
     <ClCompile Include="Src\Light\PointLight.cpp" />
     <ClCompile Include="Src\CameraClass.cpp" />
@@ -178,6 +179,7 @@
     <ClCompile Include="Src\TextureClass.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\BaseException.h" />
     <ClInclude Include="Src\Events\KeyEvent.h" />
     <ClInclude Include="Src\Events\MouseEvent.h" />
     <ClInclude Include="Src\Events\WindowEvent.h" />

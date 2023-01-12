@@ -1,4 +1,4 @@
-#include "Exception.h"
+#include "BaseException.h"
 
 BaseException::BaseException(int line, const char* file) : line(line), file(file){}
 

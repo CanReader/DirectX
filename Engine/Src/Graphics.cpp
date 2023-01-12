@@ -82,10 +82,6 @@ void Graphics::UpdateScene(float dt)
 {
 }
 
-void Graphics::RenderTestCube(ModelClass& model, int Dir)
-{
-}
-
 void Graphics::SetFullscreen(bool FullScren)
 {
 	d3d->SetFullScreen(FullScren);

@@ -7,12 +7,14 @@
 #include <Windows.h>
 #include <iostream>
 #include <memory>
+#include <sstream>
 
 #include "resource.h"
 
 #include "Direct11.h"
 #include "Graphics.h"
 #include "Debugger.h"
+#include "BaseException.h"
 
 typedef struct Location
 {
@@ -80,6 +82,62 @@ private:
 
 public:
 	std::unique_ptr<Graphics> graph;
+
+	class Exception : public BaseException
+	{
+	public:
+		Exception() {}
+		Exception(int line, const char* file, HRESULT hr)
+		{
+				this->line = line;
+				this->file = file;
+				this->hr = hr;
+		}
+			
+		const char* what() const noexcept override
+		{
+			std::ostringstream oss;
+
+			oss << GetType() << std::endl 
+				<< "[Error Code]: " << GetErrorCode() << std::endl
+				<< "[Description]: " << GetErrorString() << std::endl
+				<< GetOriginString();
+
+			whatbuffer = oss.str();
+			return whatbuffer.c_str();
+		}
+
+		virtual const char* GetType() const noexcept
+		{
+			return "Window Exception";
+		}
+
+		static std::string TranslateErrorCode(HRESULT hr)
+		{
+			char* pMsgBuf = nullptr;
+			DWORD nMsgLen = FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,nullptr,hr,MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),reinterpret_cast<LPSTR>(&pMsgBuf), 0, nullptr);
+
+			if (nMsgLen == 0)
+				return "Unidentified error code";
+
+			std::string	ErrorString = pMsgBuf;
+			LocalFree(pMsgBuf);
+			return ErrorString;
+		}
+
+		HRESULT GetErrorCode() const noexcept
+		{
+			return hr;
+		}
+
+		std::string GetErrorString() const
+		{
+			return TranslateErrorCode(hr);
+		}
+
+	private:
+		HRESULT hr;
+	};
 };
 
 #endif
