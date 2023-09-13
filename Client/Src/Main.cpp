@@ -1,4 +1,4 @@
-#include "CoreWindow.h"
+#include "CoreApp/CoreWindow.h"
 
 using namespace std;
 

@@ -15,99 +15,63 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\CameraClass.cpp">
+    <ClCompile Include="Src\CoreApp\CoreWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\CoreWindow.cpp">
+    <ClCompile Include="Src\CoreApp\Direct11.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Direct11.cpp">
+    <ClCompile Include="Src\CoreApp\Graphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Graphics.cpp">
+    <ClCompile Include="Src\Debugging\Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\InputManager.cpp">
+    <ClCompile Include="Src\Debugging\BaseException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Light\LightClass.cpp">
+    <ClCompile Include="Src\CoreGame\Resource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Log.cpp">
+    <ClCompile Include="Src\CoreGame\Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\ModelClass.cpp">
+    <ClCompile Include="Src\CoreGame\Models\Cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Src\ShaderClass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\TextureClass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Light\PointLight.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Input\InputClass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\BaseException.cpp">
+    <ClCompile Include="Src\CoreGame\Texture\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Src\CameraClass.h">
+    <ClInclude Include="Src\CoreApp\CoreWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\CoreWindow.h">
+    <ClInclude Include="Src\Debugging\Debugger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Debugger.h">
+    <ClInclude Include="Src\CoreApp\Direct11.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Direct11.h">
+    <ClInclude Include="Src\CoreApp\Graphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Graphics.h">
+    <ClInclude Include="Src\Debugging\Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\InputManager.h">
+    <ClInclude Include="Src\Debugging\BaseException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Light\LightClass.h">
+    <ClInclude Include="Src\CoreGame\Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Log.h">
+    <ClInclude Include="Src\CoreGame\Object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\ModelClass.h">
+    <ClInclude Include="Src\CoreGame\Models\Cube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Src\ShaderClass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\TextureClass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Light\PointLight.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Events\Event.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Input\InputClass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Events\KeyEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Events\WindowEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Events\MouseEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\BaseException.h">
+    <ClInclude Include="Src\CoreGame\Texture\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

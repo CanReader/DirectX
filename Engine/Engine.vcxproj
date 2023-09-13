@@ -164,39 +164,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Src\BaseException.cpp" />
-    <ClCompile Include="Src\Input\InputClass.cpp" />
-    <ClCompile Include="Src\Light\PointLight.cpp" />
-    <ClCompile Include="Src\CameraClass.cpp" />
-    <ClCompile Include="Src\CoreWindow.cpp" />
-    <ClCompile Include="Src\Direct11.cpp" />
-    <ClCompile Include="Src\Graphics.cpp" />
-    <ClCompile Include="Src\InputManager.cpp" />
-    <ClCompile Include="Src\Light\LightClass.cpp" />
-    <ClCompile Include="Src\Log.cpp" />
-    <ClCompile Include="Src\ModelClass.cpp" />
-    <ClCompile Include="Src\ShaderClass.cpp" />
-    <ClCompile Include="Src\TextureClass.cpp" />
+    <ClCompile Include="Src\CoreGame\Models\Cube.cpp" />
+    <ClCompile Include="Src\CoreGame\Object.cpp" />
+    <ClCompile Include="Src\CoreGame\Resource.cpp" />
+    <ClCompile Include="Src\Debugging\BaseException.cpp" />
+    <ClCompile Include="Src\CoreApp\CoreWindow.cpp" />
+    <ClCompile Include="Src\CoreApp\Direct11.cpp" />
+    <ClCompile Include="Src\CoreApp\Graphics.cpp" />
+    <ClCompile Include="Src\Debugging\Log.cpp" />
+    <ClCompile Include="Src\CoreGame\Texture\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Src\BaseException.h" />
-    <ClInclude Include="Src\Events\KeyEvent.h" />
-    <ClInclude Include="Src\Events\MouseEvent.h" />
-    <ClInclude Include="Src\Events\WindowEvent.h" />
-    <ClInclude Include="Src\Input\InputClass.h" />
-    <ClInclude Include="Src\Events\Event.h" />
-    <ClInclude Include="Src\Light\PointLight.h" />
-    <ClInclude Include="Src\CameraClass.h" />
-    <ClInclude Include="Src\CoreWindow.h" />
-    <ClInclude Include="Src\Debugger.h" />
-    <ClInclude Include="Src\Direct11.h" />
-    <ClInclude Include="Src\Graphics.h" />
-    <ClInclude Include="Src\InputManager.h" />
-    <ClInclude Include="Src\Light\LightClass.h" />
-    <ClInclude Include="Src\Log.h" />
-    <ClInclude Include="Src\ModelClass.h" />
-    <ClInclude Include="Src\ShaderClass.h" />
-    <ClInclude Include="Src\TextureClass.h" />
+    <ClInclude Include="Src\CoreGame\Models\Cube.h" />
+    <ClInclude Include="Src\CoreGame\Object.h" />
+    <ClInclude Include="Src\CoreGame\Resource.h" />
+    <ClInclude Include="Src\Debugging\BaseException.h" />
+    <ClInclude Include="Src\CoreApp\CoreWindow.h" />
+    <ClInclude Include="Src\Debugging\Debugger.h" />
+    <ClInclude Include="Src\CoreApp\Direct11.h" />
+    <ClInclude Include="Src\CoreApp\Graphics.h" />
+    <ClInclude Include="Src\Debugging\Log.h" />
+    <ClInclude Include="Src\CoreGame\Texture\Texture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

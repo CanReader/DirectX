@@ -1,49 +1,31 @@
-cbuffer MatrixBuffer : register(b0)
+cbuffer cbMVPObject
 {
-    matrix World;
-    matrix View;
-    matrix Projection;
-};
-
-cbuffer LightBuffer : register(b1)
-{
-    float4 diffuse;
-    float3 direction;
-    float padding;
+    float4x4 WVP;
 };
 
 struct VertexInput
 {
     float4 pos : POSITION;
-    float2 tex : TEXCOORD0;
-    float3 normal : NORMAL;
+    float4 col : COLOR;
 };
 
 struct PixelInput
 {
     float4 pos : SV_POSITION;
-    float2 tex : TEXCOORD0;
-    float3 normal : NORMAL;
+    float4 col : COLOR;
 };
 
-PixelInput VS(VertexInput inp)
+PixelInput VS(VertexInput input)
 {
-    PixelInput Output;
+    PixelInput output;
+    output.pos = mul(input.pos, WVP);
 
-    inp.pos.w = 1.0f;
+    output.col = input.col;
 
-    Output.pos = mul(inp.pos, World);
-    Output.pos = mul(Output.pos, View);
-    Output.pos = mul(Output.pos, Projection);
-
-    Output.normal = normalize(mul(inp.normal, (float3x3) World));
-
-    Output.tex = inp.tex;
-
-    return Output;
+    return output;
 }
 
-float4 PS(PixelInput inp) : SV_TARGET
+float4 PS(PixelInput input) : SV_TARGET
 {
-    return float4(0.3,0.2,0.6,0);
+    return input.col;
 }
