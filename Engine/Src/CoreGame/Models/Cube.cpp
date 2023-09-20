@@ -3,8 +3,10 @@
 
 Cube::Cube()
 {
+    ConstantBuffer = std::make_unique<cbObject>();
     worldMatrix = XMMatrixIdentity();
 
+    
     XMVECTOR camPos = XMVectorSet(0,0,-5,0);
     XMVECTOR camFocus = XMVectorSet(0,0,0,0);
     XMVECTOR camUp = XMVectorSet(0,5,0,0);
@@ -30,37 +32,24 @@ Cube::Cube(float x, float y, float z)
 bool Cube::Initialize()
 {
     HRESULT hr;
-
-    //Initialize the layout of buffer
-    D3D11_INPUT_ELEMENT_DESC Colorlayout[] =
-    {
-        {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-        {"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0},
-    };
-
-    D3D11_INPUT_ELEMENT_DESC Texturelayout[] =
-    {
-        {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-        {"Tex", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0},
-    };
+    D3D11_INPUT_ELEMENT_DESC* layout = nullptr;
 
     //Define vertecies of object
-    Vertex CubeVertecies[] =
+    Vertex vertecies[] =
     {
     Vertex(-1.0f, -1.0f, +1.0f, 1.0f, 0.0f, 0.0f, 1.0f),
     Vertex(-1.0f, +1.0f, +1.0f, 0.0f, 1.0f, 0.0f, 1.0f),
     Vertex(+1.0f, +1.0f, +1.0f, 0.0f, 0.0f, 1.0f, 1.0f),
     Vertex(+1.0f, -1.0f, +1.0f, 1.0f, 1.0f, 0.0f, 1.0f),
-    
-    Vertex(-1.0f, -1.0f, -1.0f, 0.0f, 1,1,1),
-    Vertex(-1.0f, +1.0f, -1.0f, 1.0f, 1,1,1),
-    Vertex(+1.0f, +1.0f, -1.0f, 1.0f, 1,1,1),
-    Vertex(+1.0f, -1.0f, -1.0f, 1.0f, 1,1,1),
+    Vertex(-1.0f, -1.0f, -1.0f, 0.0f, 1.0f, 1.0f, 1.0f),
+    Vertex(-1.0f, +1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f),
+    Vertex(+1.0f, +1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f),
+    Vertex(+1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f),
     };
 
     //Define indecies
     DWORD indicies[] =
-    { 
+    {
         // front face
    0, 1, 2,
    0, 2, 3,
@@ -86,9 +75,22 @@ bool Cube::Initialize()
    4, 3, 7
     };
 
+    //Initialize the layout of buffer
+    D3D11_INPUT_ELEMENT_DESC Colorlayout[] =
+    {
+        {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+        {"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0},
+    };
+
+    D3D11_INPUT_ELEMENT_DESC Texturelayout[] =
+    {
+        {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+        {"TEXCOORD", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0},
+    };
+
     //Before using vertex shader, compile file
     ID3D10Blob* errorBlob = nullptr;
-    hr = D3DX11CompileFromFile("ColorShader.hlsl", nullptr, nullptr, "VS", "vs_4_0", D3D10_SHADER_DEBUG, 0, nullptr, &vsBlob, &errorBlob, &hr);
+    hr = D3DX11CompileFromFile("TextureShader.hlsl", nullptr, nullptr, "VS", "vs_4_0", D3D10_SHADER_DEBUG, 0, nullptr, &vsBlob, &errorBlob, &hr);
 
     //Some error handling
     if (FAILED(hr))
@@ -107,7 +109,7 @@ bool Cube::Initialize()
 
 
     //Before using vertex shader, compile file
-    D3DX11CompileFromFile("ColorShader.hlsl", 0, 0, "PS", "ps_4_0", 0, 0, 0, &psBlob, 0, &hr);
+    D3DX11CompileFromFile("TextureShader.hlsl", 0, 0, "PS", "ps_4_0", 0, 0, 0, &psBlob, 0, &hr);
     ENDSTR(hr, "Failed to compile the pixel shader file!");
     
     //Create the pixel shader
@@ -116,11 +118,11 @@ bool Cube::Initialize()
 
     //Initialize the resource and add the vertecies
     D3D11_SUBRESOURCE_DATA sdata = { 0 };
-    sdata.pSysMem = CubeVertecies;
-    UINT laysize = ARRAYSIZE(layout);
+    sdata.pSysMem = vertecies;
+    UINT laysize = ARRAYSIZE(Texturelayout);
 
     //Create the input layout that is gonna defines how the buffer send
-    hr = dev->CreateInputLayout(layout, laysize, vsBlob->GetBufferPointer(), vsBlob->GetBufferSize(), &lay);
+    hr = dev->CreateInputLayout(Texturelayout, laysize, vsBlob->GetBufferPointer(), vsBlob->GetBufferSize(), &lay);
 
     ENDSTR(hr, "Failed to create input layout!");
     
@@ -172,12 +174,16 @@ bool Cube::Initialize()
 
     ENDSTR(hr,"Failed to create Constant Buffer!");
 
-    ConstantBuffer = std::make_unique<cbObject>();
+    if (!InitializeTexture())
+    {
+        std::cerr << "Failed to initialize texture!\n";
+        return false;
+    }
 
     return true;
 }
 
-void Cube::Render(float t)
+void Cube::Render()
 {
     if (devcon == nullptr)
         return;
@@ -185,9 +191,13 @@ void Cube::Render(float t)
     UINT stride = sizeof(Vertex);
     UINT offset = 0;
 
-    worldMatrix = worldMatrix * XMMatrixRotationAxis(XMVectorSet(1,1,1,1), t);
-    
     ConstantBuffer->WMP = XMMatrixTranspose(worldMatrix * viewMatrix * projMatrix);
+
+    if (Texture != nullptr && samplerState != nullptr)
+    {
+        devcon->PSSetShaderResources(0,1,&Texture);
+        devcon->PSSetSamplers(0,1,&samplerState);
+    }
 
     devcon->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
     devcon->UpdateSubresource(WVPBuffer,0,nullptr,ConstantBuffer.get(), 0, 0);
@@ -197,6 +207,13 @@ void Cube::Render(float t)
     devcon->VSSetShader(vs, NULL, 0);
     devcon->PSSetShader(ps, NULL, 0);
     devcon->DrawIndexed(IndexCount, 0,0);
+}
+
+void Cube::Update(float t)
+{
+    worldMatrix = XMMatrixRotationX(sin(t/100)*100);
+    worldMatrix *= XMMatrixTranslation(sin(t), cos(t),3);
+
 }
 
 
@@ -228,5 +245,31 @@ void Cube::SetDevice(ID3D11Device* dev, ID3D11DeviceContext* devcon)
 {
     this->dev = dev;
     this->devcon = devcon;
+}
+
+bool Cube::InitializeTexture()
+{
+    HRESULT hr;
+
+    hr = D3DX11CreateShaderResourceViewFromFileA(dev,TexturePath,NULL,NULL,&Texture,NULL);
+
+    ENDSTR(hr, "Failed to create a shader resource!");
+
+    D3D11_SAMPLER_DESC SamplerDesc;
+    ZeroMemory(&SamplerDesc,sizeof(D3D11_SAMPLER_DESC));
+
+    SamplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+    SamplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+    SamplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+    SamplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+    SamplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+    SamplerDesc.MinLOD = 0;
+    SamplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+    hr = dev->CreateSamplerState(&SamplerDesc,&samplerState);
+
+    ENDSTR(hr,"Failed to create a sampler state");
+
+    return true;
 }
 

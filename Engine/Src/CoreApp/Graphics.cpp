@@ -18,8 +18,6 @@ bool Graphics::Initialize(HWND hWnd, int Width, int Height, bool FullScreen)
 		return false;
 
 	Objects.push_back(new Cube());
-	Objects.push_back(new Cube(2,2,2));
-	Objects.push_back(new Cube(-2,-2,-2));
 
 
 	Iterate(Objects)
@@ -48,7 +46,7 @@ void Graphics::Render()
 	}
 
 	Iterate(Objects)
-		i->Render(sin(t / 10000));
+		i->Render();
 
 	UpdateScene(t);
 	
@@ -64,6 +62,8 @@ void Graphics::Shutdown()
 
 void Graphics::UpdateScene(float dt)
 {
+	Iterate(Objects)
+		i->Update(dt);
 }
 
 void Graphics::SetFullscreen(bool FullScren)

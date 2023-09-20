@@ -17,10 +17,13 @@ public:
 	Cube(float x, float y, float z);
 
 	virtual bool Initialize() override;
-	virtual void Render(float t) override;
+	virtual void Render() override;
+	virtual void Update(float t) override;
 	void Shutdown();
 
 	void SetDevice(ID3D11Device* dev, ID3D11DeviceContext* devcon);
+
+	bool InitializeTexture();
 
 private:
 	ID3D11Device* dev;
@@ -41,6 +44,11 @@ private:
 	XMMATRIX worldMatrix;
 	XMMATRIX viewMatrix;
 	XMMATRIX projMatrix;
+
+
+	const char* TexturePath = "C:\\Users\\CANBERK\\Desktop\\Projects\\DirectX\\Bin\\box.jpeg";
+	ID3D11ShaderResourceView* Texture;
+	ID3D11SamplerState* samplerState;
 
 	struct Vertex
 	{
@@ -79,6 +87,7 @@ private:
 	};
 
 	std::unique_ptr<cbObject> ConstantBuffer;
+	
 };
 
 

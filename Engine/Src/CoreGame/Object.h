@@ -12,7 +12,8 @@ public:
 	Object();
 
 	virtual bool Initialize() = 0;
-	virtual void Render(float t) = 0;
+	virtual void Render() = 0;
+	virtual void Update(float t) = 0;
 
 	const char* GetName();
 protected:

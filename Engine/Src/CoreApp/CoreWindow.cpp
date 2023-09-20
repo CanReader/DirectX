@@ -192,6 +192,7 @@ LRESULT CALLBACK CoreWindow::WndProc(HWND hWnd, UINT Message, WPARAM wParam, LPA
 	case WM_DESTROY:
 	{
 		PostQuitMessage(0);
+		FreeConsole();
 		return 0;
 	}break;
 	default:DefWindowProc(hWnd, Message, wParam, lParam); 
