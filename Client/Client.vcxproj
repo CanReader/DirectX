@@ -82,11 +82,13 @@
     <IntDir>$(SolutionDir)Intermediate</IntDir>
     <LibraryPath>$(SolutionDir)Engine\Vendors\DirectX-SDK\Lib\x64;$(LibraryPath)</LibraryPath>
     <IncludePath>$(SolutionDir)Engine\Vendors\spdlog-1.9.2\include;$(IncludePath)</IncludePath>
+    <ExternalIncludePath>$(SolutionDir)Engine\Vendors\spdlog-1.9.2\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(SolutionDir)Engine\Vendors\DirectX-SDK\Lib\x64;$(LibraryPath)</LibraryPath>
     <IncludePath>$(SolutionDir)Engine\Vendors\spdlog-1.9.2\include;$(IncludePath)</IncludePath>
+    <ExternalIncludePath>$(SolutionDir)Engine\Vendors\spdlog-1.9.2\include;$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -94,6 +96,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -108,6 +111,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -122,8 +126,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine\Vendors\DirectX-SDK\Include;$(SolutionDir)Engine\Vendors\spdlog-1.9.2\include;$(SolutionDir)Engine\Src;$(IncludePath);C:\Users\canbe\Desktop\Projects\DirectX\Engine\Vendors\spdlog-1.9.2\include\spdlog</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>C:\Users\CANBERK\Desktop\Projects\DirectX\Engine\Vendors\spdlog-1.12.0\include;$(SolutionDir)Engine\Vendors\DirectX-SDK\Include;$(SolutionDir)Engine\Vendors\spdlog-1.9.2\include;$(SolutionDir)Engine\Src;$(IncludePath);C:\Users\canbe\Desktop\Projects\DirectX\Engine\Vendors\spdlog-1.9.2\include\spdlog</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,7 +143,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine\Vendors\DirectX-SDK\Include;C:\Users\canbe\Desktop\Projects\DirectX\Engine\Vendors\spdlog-1.9.2\include;$(SolutionDir)Engine\Src;$(IncludePath);C:\Users\canbe\Desktop\Projects\DirectX\Engine\Vendors\spdlog-1.9.2\include\spdlog</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\CANBERK\Desktop\Projects\DirectX\Engine\Vendors\spdlog-1.12.0\include;$(SolutionDir)Engine\Vendors\DirectX-SDK\Include;C:\Users\canbe\Desktop\Projects\DirectX\Engine\Vendors\spdlog-1.9.2\include;$(SolutionDir)Engine\Src;$(IncludePath);C:\Users\canbe\Desktop\Projects\DirectX\Engine\Vendors\spdlog-1.9.2\include\spdlog</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

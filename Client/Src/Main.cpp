@@ -2,15 +2,16 @@
 
 using namespace std;
 
+
 //int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow)
 int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine,int nCmdShow)
 {
 	int ReturnValue = 0;
 
+
 	CoreWindow* Window = new CoreWindow(hInstance);
 	if (Window->InitializeWindow("DirectX App",1920,1080))
 	{
-
 		Window->ProcessMessages();
 		ReturnValue = Window->ReturnValue;
 	}
