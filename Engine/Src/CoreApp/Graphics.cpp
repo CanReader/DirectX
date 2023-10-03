@@ -27,6 +27,7 @@ bool Graphics::Initialize(HWND hWnd, int Width, int Height, bool FullScreen)
 	}
 	
 	DX_INFO("Direct3d is initialized!");
+	OutputDebugString("Graphic class has been initialized!\n");
 		
 	return true;
 }

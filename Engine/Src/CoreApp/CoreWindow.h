@@ -13,8 +13,12 @@
 
 #include "Direct11.h"
 #include "Graphics.h"
+#include "../Debugging/Log.h"
 #include "../Debugging/Debugger.h"
 #include "../Debugging/BaseException.h"
+
+std::shared_ptr<spdlog::logger> Messanger::Log::m_Logger;
+
 
 typedef struct Location
 {

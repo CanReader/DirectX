@@ -84,7 +84,7 @@ bool Direct11::SetRasterizer()
 	rasterDesc.DepthBiasClamp = 0.0f;
 	rasterDesc.DepthClipEnable = true;
 	rasterDesc.FillMode = D3D11_FILL_SOLID;
-	rasterDesc.FrontCounterClockwise = false;
+	rasterDesc.FrontCounterClockwise = true;
 	rasterDesc.MultisampleEnable = true;
 	rasterDesc.ScissorEnable = false;
 	rasterDesc.SlopeScaledDepthBias = 0.0f;
@@ -92,7 +92,7 @@ bool Direct11::SetRasterizer()
 	// Create the rasterizer state from the description we just filled out.
 	HRESULT result = dev->CreateRasterizerState(&rasterDesc, &RasterState);
 
-	END(result)
+	ENDSTR(result, "Failed to create rasterizer state!");
 
 	// Now set the rasterizer state.
 	devcon->RSSetState(RasterState);
@@ -102,14 +102,13 @@ bool Direct11::SetRasterizer()
 
 bool Direct11::EnumFactory()
 {
-	IDXGIFactory* fac;
 	IDXGIOutput* Out;
 
-	HRESULT hr = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&fac);
+	HRESULT hr = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&factory);
 
 	END(hr)
 
-		hr = fac->EnumAdapters(0, &adapter);
+		hr = factory->EnumAdapters(0, &adapter);
 
 	END(hr)
 
@@ -119,8 +118,6 @@ bool Direct11::EnumFactory()
 
 		hr = adapter->GetDesc(&adapterDesc);
 
-	fac->Release();
-	fac = 0;
 	Out->Release();
 	Out = 0;
 
@@ -133,11 +130,6 @@ void Direct11::GetSystemDesc()
 	SystemMemory = (int)(adapterDesc.DedicatedSystemMemory / 1024 / 1024);
 	SharedMemory = (int)(adapterDesc.SharedSystemMemory / 1024 / 1024);
 	VideoCardDescription = (char*)adapterDesc.Description;
-
-	std::cout << "System memory " << SystemMemory << std::endl;
-	std::cout << "Shared system memory " << SharedMemory << std::endl;
-	std::cout << "Video memory " << VideoMemory << std::endl;
-	std::cout << "Description " << VideoCardDescription << std::endl;
 }
 
 void Direct11::SetProjection()
@@ -172,14 +164,13 @@ bool Direct11::InitializeDirect3D(HWND hWnd, int Width, int Height, bool FullScr
 
 	DXGI_SWAP_CHAIN_DESC sdc;
 
-
 	//Build structure of swap chain desc
 	ZeroMemory(&sdc, sizeof(sdc));
 	sdc.BufferCount = 1;
 	sdc.BufferDesc.Width = this->Width;
 	sdc.BufferDesc.Height = this->Height;
 	sdc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	sdc.BufferDesc.RefreshRate.Numerator = 75;
+	sdc.BufferDesc.RefreshRate.Numerator = 60;
 	sdc.BufferDesc.RefreshRate.Denominator = 1;
 	sdc.BufferDesc.Scaling = DXGI_MODE_SCALING_STRETCHED;
 	sdc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
@@ -229,7 +220,7 @@ bool Direct11::InitializeDirect3D(HWND hWnd, int Width, int Height, bool FullScr
 
 	devcon->RSSetViewports(1, &vp);
 
-	//SetRasterizer();
+	SetRasterizer();
 
 	SetProjection();
 
@@ -267,6 +258,7 @@ void Direct11::DeleteDirect3D()
 	ReleaseInterface(devcon)
 	ReleaseInterface(dev);
 	ReleaseInterface(mQueue);
+	ReleaseInterface(factory);
 }
 
 void Direct11::SetFullScreen(bool FullScreen)

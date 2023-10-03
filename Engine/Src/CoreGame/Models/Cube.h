@@ -15,6 +15,7 @@ class Cube : public Object
 public:
 	Cube();
 	Cube(float x, float y, float z);
+	Cube(Vertex* Vertecies);
 
 	virtual bool Initialize() override;
 	virtual void Render() override;
@@ -26,6 +27,13 @@ public:
 	bool InitializeTexture();
 
 private:
+	void CompileShader();
+	bool CompileColorShader();
+	bool CompileTextureShader();
+
+	bool CreateInputLayout(D3D11_SUBRESOURCE_DATA* SubData);
+	bool CreateBuffers();
+
 	ID3D11Device* dev;
 	ID3D11DeviceContext* devcon;
 
@@ -38,46 +46,21 @@ private:
 	ID3D11Buffer* VertexBuffer;
 	ID3D11Buffer* IndexBuffer;
 
+	D3D11_INPUT_ELEMENT_DESC* layoutDesc;
+
 	ID3D10Blob* vsBlob;
 	ID3D10Blob* psBlob;
 
+	//Constant Buffer
 	XMMATRIX worldMatrix;
 	XMMATRIX viewMatrix;
 	XMMATRIX projMatrix;
 
 
+	//Textures
 	const char* TexturePath = "C:\\Users\\CANBERK\\Desktop\\Projects\\DirectX\\Bin\\box.jpeg";
 	ID3D11ShaderResourceView* Texture;
 	ID3D11SamplerState* samplerState;
-
-	struct Vertex
-	{
-		Vertex(XMFLOAT3 pos)
-		{
-			this->pos = pos;
-		}
-
-		Vertex(float x, float y, float z)
-		{
-			this->pos = XMFLOAT3(x, y, z);
-			this->col = XMFLOAT4(1,0,1,1);
-		}
-
-		Vertex(XMFLOAT3 pos, XMFLOAT4 col)
-		{
-			this->pos = pos;
-			this->col = col;
-		}
-
-		Vertex(float x, float y, float z, float r, float g, float b, float a)
-		{
-			pos = XMFLOAT3(x, y, z);
-			col = XMFLOAT4(r, g, b, a);
-		}
-
-		XMFLOAT3 pos;
-		XMFLOAT4 col;
-	};
 
 	struct cbObject
 	{
@@ -88,6 +71,8 @@ private:
 
 	std::unique_ptr<cbObject> ConstantBuffer;
 	
+	Vertex* vertices = nullptr;
+	int* indices;
 };
 
 

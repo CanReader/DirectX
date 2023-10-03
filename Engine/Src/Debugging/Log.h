@@ -7,15 +7,15 @@
 #include "spdlog/sinks/stdout_color_sinks.h"
 
 #define END(hr) if(FAILED(hr)) return false;
-#define ENDSTR(hr,exp) if(FAILED(hr)){std::cout << exp << "\n"; return false;}
+#define ENDSTR(hr,exp) if(FAILED(hr)){ DX_ERROR(exp) return false;}
 #define ReleaseInterface(i) if(i) i->Release(); i = 0;
 
-#define DX_TRACE(text) SPDLOG_LOGGER_CALL(Messanger::Log::GetLogger(), spdlog::level::trace, text)
-#define DX_INFO(text)  SPDLOG_LOGGER_CALL(Messanger::Log::GetLogger(), spdlog::level::info, text)
-#define DX_DEBUG(text) SPDLOG_LOGGER_CALL(Messanger::Log::GetLogger(), spdlog::level::debug,  text)
-#define DX_WARN(text)  SPDLOG_LOGGER_CALL(Messanger::Log::GetLogger(), spdlog::level::warn, text)
-#define DX_ERROR(text) SPDLOG_LOGGER_CALL(Messanger::Log::GetLogger(), spdlog::level::err,  text)
-#define DX_FATAL(text) SPDLOG_LOGGER_CALL(Messanger::Log::GetLogger(), spdlog::level::critical,  text)
+#define DX_TRACE(text) SPDLOG_LOGGER_CALL(Messanger::Log::GetLogger(), spdlog::level::trace, text);
+#define DX_INFO(text)  SPDLOG_LOGGER_CALL(Messanger::Log::GetLogger(), spdlog::level::info, text);
+#define DX_DEBUG(text) SPDLOG_LOGGER_CALL(Messanger::Log::GetLogger(), spdlog::level::debug,  text);
+#define DX_WARN(text)  SPDLOG_LOGGER_CALL(Messanger::Log::GetLogger(), spdlog::level::warn, text);
+#define DX_ERROR(text) SPDLOG_LOGGER_CALL(Messanger::Log::GetLogger(), spdlog::level::err,  text);
+#define DX_FATAL(text) SPDLOG_LOGGER_CALL(Messanger::Log::GetLogger(), spdlog::level::critical,  text);
 
 namespace Messanger
 {

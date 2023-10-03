@@ -85,7 +85,7 @@
     <OutDir>$(SolutionDir)Bin</OutDir>
     <IntDir>$(SolutionDir)Intermediate</IntDir>
     <IncludePath>$(ProjectDir)Vendors\DirectX-SDK\Include;$(ProjectDir)Vendors\spdlog-1.9.2\include;$(ProjectDir)Vendors\DirectXTK\Inc;$(IncludePath)</IncludePath>
-    <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</ExternalIncludePath>
+    <ExternalIncludePath>$(ProjectDir)Vendors\spdlog-1.12.0\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</ExternalIncludePath>
     <LibraryPath>$(ProjectDir)Vendors\DirectX-SDK\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -93,7 +93,7 @@
     <OutDir>$(SolutionDir)Bin</OutDir>
     <IntDir>$(SolutionDir)Intermediate</IntDir>
     <IncludePath>$(ProjectDir)Vendors\DirectX-SDK\Include;$(ProjectDir)Vendors\spdlog-1.9.2\include;$(ProjectDir)Vendors\DirectXTK\Inc;$(IncludePath)</IncludePath>
-    <ExternalIncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</ExternalIncludePath>
+    <ExternalIncludePath>$(ProjectDir)Vendors\spdlog-1.12.0\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</ExternalIncludePath>
     <LibraryPath>$(ProjectDir)Vendors\DirectX-SDK\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -134,8 +134,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>BUILD_DLL</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)Vendors\DirectX-SDK\Include;$(ProjectDir)Vendors\spdlog-1.9.2\include;$(IncludePath)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)Vendors\DirectX-SDK\Include;$(ProjectDir)Vendors\spdlog-1.12.0\include;$(IncludePath)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
@@ -154,8 +154,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>BUILD_DLL</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)Vendors\DirectX-SDK\Include;$(ProjectDir)Vendors\spdlog-1.9.2\include;$(IncludePath)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)Vendors\DirectX-SDK\Include;$(ProjectDir)Vendors\spdlog-1.12.0\include;$(IncludePath)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
@@ -170,7 +170,6 @@
   <ItemGroup>
     <ClCompile Include="Src\CoreGame\Models\Cube.cpp" />
     <ClCompile Include="Src\CoreGame\Object.cpp" />
-    <ClCompile Include="Src\CoreGame\Resource.cpp" />
     <ClCompile Include="Src\Debugging\BaseException.cpp" />
     <ClCompile Include="Src\CoreApp\CoreWindow.cpp" />
     <ClCompile Include="Src\CoreApp\Direct11.cpp" />
@@ -181,7 +180,6 @@
   <ItemGroup>
     <ClInclude Include="Src\CoreGame\Models\Cube.h" />
     <ClInclude Include="Src\CoreGame\Object.h" />
-    <ClInclude Include="Src\CoreGame\Resource.h" />
     <ClInclude Include="Src\Debugging\BaseException.h" />
     <ClInclude Include="Src\CoreApp\CoreWindow.h" />
     <ClInclude Include="Src\Debugging\Debugger.h" />

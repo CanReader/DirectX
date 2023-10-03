@@ -78,6 +78,7 @@ public:
 	ID3D11Device* dev;
 	ID3D11DeviceContext* devcon;
 	ID3D11RenderTargetView* rtv;
+	IDXGIFactory* factory;
 	
 	ID3D11InfoQueue* mQueue;
 
