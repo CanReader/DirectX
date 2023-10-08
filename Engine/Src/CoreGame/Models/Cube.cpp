@@ -3,7 +3,7 @@
 
 Cube::Cube()
 {
-    ConstantBuffer = std::make_unique<cbObject>();
+    wmp = std::make_unique<ConstantBuffer_WMP>();
     worldMatrix = XMMatrixIdentity();
 
     
@@ -18,7 +18,7 @@ Cube::Cube()
 Cube::Cube(float x, float y, float z)
 {
     worldMatrix = XMMatrixIdentity();
-
+    
     worldMatrix *= XMMatrixTranslation(x,y,z);
 
     XMVECTOR camPos = XMVectorSet(0, 0, -5, 0);
@@ -31,9 +31,9 @@ Cube::Cube(float x, float y, float z)
 
 Cube::Cube(Vertex* Vertecies)
 {
+    wmp = std::make_unique<ConstantBuffer_WMP>();
     worldMatrix = XMMatrixIdentity();
 
-    worldMatrix *= XMMatrixTranslation(0,0,0);
 
     XMVECTOR camPos = XMVectorSet(0, 0, -5, 0);
     XMVECTOR camFocus = XMVectorSet(0, 0, 0, 0);
@@ -43,6 +43,40 @@ Cube::Cube(Vertex* Vertecies)
     projMatrix = XMMatrixPerspectiveFovLH(0.4f * XM_PI, (float)1920 / 1080, 1.0f, 1000.0f);
 
     this->vertices = Vertecies;
+}
+
+Cube::Cube(const char* TexturePath)
+{
+    wmp = std::make_unique<ConstantBuffer_WMP>();
+    worldMatrix = XMMatrixIdentity();
+
+
+    Vvector3 camPos = XMVectorSet(0, 0, -5, 0);
+    Vvector3 camFocus = XMVectorSet(0, 0, 0, 0);
+    Vvector3 camUp = XMVectorSet(0, 5, 0, 0);
+
+    viewMatrix = XMMatrixLookAtLH(camPos, camFocus, camUp);
+    projMatrix = XMMatrixPerspectiveFovLH(0.4f * XM_PI, (float)1920 / 1080, 1.0f, 1000.0f);
+
+    this->TexturePath = TexturePath;
+}
+
+Cube::Cube(float x, float y, float z, const char* TexturePath)
+{
+    wmp = std::make_unique<ConstantBuffer_WMP>();
+    worldMatrix = XMMatrixIdentity();
+
+
+    Vvector3 camPos = XMVectorSet(0, 0, -5, 0);
+    Vvector3 camFocus = XMVectorSet(0, 0, 0, 0);
+    Vvector3 camUp = XMVectorSet(0, 5, 0, 0);
+
+    viewMatrix = XMMatrixLookAtLH(camPos, camFocus, camUp);
+    projMatrix = XMMatrixPerspectiveFovLH(0.4f * XM_PI, (float)1920 / 1080, 1.0f, 1000.0f);
+
+    this->TexturePath = TexturePath;
+
+    worldMatrix = XMMatrixTranslation(x,y,z);
 }
 
 bool Cube::Initialize()
@@ -135,7 +169,7 @@ void Cube::Render()
         !IndexBuffer ||
         !VertexBuffer ||
         !vs || !ps ||
-        ConstantBuffer == nullptr;
+        wmp == nullptr;
 
     if (noRender)
         return;
@@ -143,7 +177,7 @@ void Cube::Render()
     UINT stride = sizeof(Vertex);
     UINT offset = 0;
 
-    ConstantBuffer->WMP = XMMatrixTranspose(worldMatrix * viewMatrix * projMatrix);
+    wmp->WMP = XMMatrixTranspose(worldMatrix * viewMatrix * projMatrix);
 
     if (Texture && samplerState)
     {
@@ -152,7 +186,7 @@ void Cube::Render()
     }
 
     devcon->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-    devcon->UpdateSubresource(WVPBuffer,0,nullptr,ConstantBuffer.get(), 0, 0);
+    devcon->UpdateSubresource(WVPBuffer,0,nullptr,wmp.get(), 0, 0);
     devcon->VSSetConstantBuffers(0,1,&WVPBuffer);
     devcon->IASetVertexBuffers(0, 1, &VertexBuffer, &stride, &offset);
     devcon->IASetIndexBuffer(IndexBuffer, DXGI_FORMAT_R32_UINT,0);
@@ -185,8 +219,8 @@ void Cube::Shutdown()
     if (psBlob)
         psBlob->Release();
 
-    if(ConstantBuffer)
-        ConstantBuffer.release();
+    if(wmp)
+        wmp.release();
 }
 
 void Cube::SetDevice(ID3D11Device* dev, ID3D11DeviceContext* devcon)
@@ -348,7 +382,12 @@ bool Cube::CreateBuffers()
 
     ENDSTR(hr, "Failed to create vertex buffer!")
 
-        //Initialize the index buffer descriptipn
+
+
+
+
+
+    //Initialize the index buffer descriptipn
     D3D11_BUFFER_DESC IndexDesc;
     ZeroMemory(&IndexDesc, sizeof(D3D11_BUFFER_DESC));
 
@@ -364,11 +403,15 @@ bool Cube::CreateBuffers()
 
     ENDSTR(hr, "Failed to create index buffer!")
 
-        //Initialize the MVP buffer description
+
+
+
+
+    //Initialize the MVP buffer description
     D3D11_BUFFER_DESC cbDesc;
     ZeroMemory(&cbDesc, sizeof(D3D11_BUFFER_DESC));
     cbDesc.Usage = D3D11_USAGE_DEFAULT;
-    cbDesc.ByteWidth = sizeof(cbObject);
+    cbDesc.ByteWidth = sizeof(ConstantBuffer_WMP);
     cbDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
     cbDesc.MiscFlags = 0;
     cbDesc.CPUAccessFlags = 0;

@@ -74,16 +74,18 @@ public:
 	ID3D11DepthStencilView* DepthStencilView;
 	ID3D11RasterizerState* RasterState;
 
+	ID3D11RasterizerState* CCWcullMode;
+	ID3D11RasterizerState* CWcullMode;
+
 	ID3D11Texture3D* BackBuffer;
 	ID3D11Device* dev;
 	ID3D11DeviceContext* devcon;
 	ID3D11RenderTargetView* rtv;
 	IDXGIFactory* factory;
 	
-	ID3D11InfoQueue* mQueue;
+	ID3D11BlendState* Transparency;
 
-	ID3D11SamplerState* sd;
-	ID3D11ShaderResourceView* srv;
+	ID3D11InfoQueue* mQueue;
 
 	XMMATRIX world;
 	XMMATRIX proj;
@@ -115,6 +117,7 @@ private:
 	 bool EnumFactory();
 	 void GetSystemDesc();
 	 void SetProjection();
+	 void SetBlending();
 
 //Globals
 

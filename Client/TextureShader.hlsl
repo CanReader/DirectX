@@ -4,6 +4,7 @@ SamplerState colorSampler : register(s0);
 cbuffer cbMVPObject
 {
     float4x4 WVP;
+
 };  
 
 struct VertexInput
@@ -33,7 +34,8 @@ PixelInput VS(VertexInput inp, float2 texCoord : TEXCOORD)
 
 float4 PS(PixelInput inp) : SV_TARGET
 {
-    return ColorMap.Sample(colorSampler, inp.tex);
+    float3 Textured = ColorMap.Sample(colorSampler, inp.tex);
+    return float4(Textured,1.0f);
 }
 
 

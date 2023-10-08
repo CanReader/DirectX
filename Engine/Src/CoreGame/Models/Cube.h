@@ -16,6 +16,8 @@ public:
 	Cube();
 	Cube(float x, float y, float z);
 	Cube(Vertex* Vertecies);
+	Cube(const char* TexturePath);
+	Cube(float x, float y, float z, const char* TexturePath);
 
 	virtual bool Initialize() override;
 	virtual void Render() override;
@@ -58,18 +60,18 @@ private:
 
 
 	//Textures
-	const char* TexturePath = "C:\\Users\\CANBERK\\Desktop\\Projects\\DirectX\\Bin\\box.jpeg";
+	const char* TexturePath = "";
 	ID3D11ShaderResourceView* Texture;
 	ID3D11SamplerState* samplerState;
 
-	struct cbObject
+	struct ConstantBuffer_WMP
 	{
-		cbObject() : WMP(XMMatrixIdentity()){}
+		ConstantBuffer_WMP() : WMP(XMMatrixIdentity()){}
 
 		XMMATRIX WMP;
 	};
 
-	std::unique_ptr<cbObject> ConstantBuffer;
+	std::unique_ptr<ConstantBuffer_WMP> wmp;
 	
 	Vertex* vertices = nullptr;
 	int* indices;

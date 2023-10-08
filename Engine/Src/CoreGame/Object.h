@@ -5,6 +5,10 @@
 #include <d3d11.h>
 #include <xnamath.h>
 
+typedef XMFLOAT2 Vector2;
+typedef XMFLOAT3 Vector3;
+typedef XMFLOAT4 Vector4;
+typedef XMVECTOR Vvector3;
 
 class Object
 {
@@ -19,18 +23,18 @@ public:
 
 	struct Vertex
 {
-	Vertex(XMFLOAT3 pos)
+	Vertex(Vector3 pos)
 	{
 		this->pos = pos;
 	}
 
 	Vertex(float x, float y, float z)
 	{
-		this->pos = XMFLOAT3(x, y, z);
+		this->pos = Vector3(x, y, z);
 		this->col = XMFLOAT4(1, 0, 1, 1);
 	}
 
-	Vertex(XMFLOAT3 pos, XMFLOAT4 col)
+	Vertex(Vector3 pos, XMFLOAT4 col)
 	{
 		this->pos = pos;
 		this->col = col;
@@ -38,19 +42,19 @@ public:
 
 	Vertex(float x, float y, float z, float r, float g, float b, float a)
 	{
-		pos = XMFLOAT3(x, y, z);
-		col = XMFLOAT4(r, g, b, a);
+		pos = Vector3(x, y, z);
+		col = Vector4(r, g, b, a);
 	}
 
 	Vertex(float x, float y, float z, float u, float v)
 	{
-		pos = XMFLOAT3(x, y, z);
-		TextureUV = XMFLOAT2(u, v);
+		pos = Vector3(x, y, z);
+		TextureUV = Vector2(u, v);
 	}
 
-	XMFLOAT3 pos;
-	XMFLOAT2 TextureUV;
-	XMFLOAT4 col;
+	Vector3 pos;
+	Vector2 TextureUV;
+	Vector4  col;
 };
 protected:
 	char* Name;

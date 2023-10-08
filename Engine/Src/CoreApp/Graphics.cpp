@@ -16,8 +16,8 @@ bool Graphics::Initialize(HWND hWnd, int Width, int Height, bool FullScreen)
 
 	if (!d3d->InitializeDirect3D(hWnd, Width, Height, FullScreen))
 		return false;
-
-	Objects.push_back(new Cube());
+	for(int j = -6; j < 6; j=j+2)
+	Objects.push_back(new Cube(j,-j,0,"C:\\Users\\CANBERK\\Desktop\\Projects\\DirectX\\Bin\\AnimeGirlTR.png"));
 
 
 	Iterate(Objects)

@@ -140,6 +140,22 @@ void Direct11::SetProjection()
 	proj = XMMatrixPerspectiveFovLH(fov,ScreenAspect,0.01f,100.0f);
 }
 
+void Direct11::SetBlending()
+{
+	D3D11_BLEND_DESC bDesc;
+	ZeroMemory(&bDesc,sizeof(D3D11_BLEND_DESC));
+
+	D3D11_RENDER_TARGET_BLEND_DESC rDesc;
+	ZeroMemory(&bDesc,sizeof(D3D11_RENDER_TARGET_BLEND_DESC));
+
+	rDesc.BlendEnable = true;
+	rDesc.BlendOp = D3D11_BLEND_OP_ADD;
+
+	bDesc.RenderTarget[0] = rDesc;
+
+	dev->CreateBlendState(&bDesc,&Transparency);
+}
+
 bool Direct11::InitializeDirect3D(HWND hWnd, int Width, int Height, bool FullScreen)
 {
 #pragma warning(disable:4996)
@@ -249,8 +265,6 @@ void Direct11::DeleteDirect3D()
 	ReleaseInterface(adapter)
 	ReleaseInterface(sc)
 	ReleaseInterface(rtv)
-	ReleaseInterface(sd)
-	ReleaseInterface(srv)
 	ReleaseInterface(DepthBuffer)
 	ReleaseInterface(DepthStencilState)
 	ReleaseInterface(DepthStencilView)
@@ -259,6 +273,9 @@ void Direct11::DeleteDirect3D()
 	ReleaseInterface(dev);
 	ReleaseInterface(mQueue);
 	ReleaseInterface(factory);
+	ReleaseInterface(Transparency);
+	ReleaseInterface(CCWcullMode);
+	ReleaseInterface(CWcullMode);
 }
 
 void Direct11::SetFullScreen(bool FullScreen)
