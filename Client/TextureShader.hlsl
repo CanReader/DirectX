@@ -34,8 +34,9 @@ PixelInput VS(VertexInput inp, float2 texCoord : TEXCOORD)
 
 float4 PS(PixelInput inp) : SV_TARGET
 {
-    float3 Textured = ColorMap.Sample(colorSampler, inp.tex);
-    return float4(Textured,1.0f);
+    float4 Textured = ColorMap.Sample(colorSampler, inp.tex);	
+    clip(Textured.a - 0.25);
+    return Textured;
 }
 
 

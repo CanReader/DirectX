@@ -190,6 +190,9 @@ void Cube::Render()
     devcon->VSSetConstantBuffers(0,1,&WVPBuffer);
     devcon->IASetVertexBuffers(0, 1, &VertexBuffer, &stride, &offset);
     devcon->IASetIndexBuffer(IndexBuffer, DXGI_FORMAT_R32_UINT,0);
+    if (Rasterizer)
+        devcon->RSSetState(Rasterizer);
+    //devcon->OMSetBlendState(Transparency,nullptr, 0xffffffff);
     devcon->VSSetShader(vs, NULL, 0);
     devcon->PSSetShader(ps, NULL, 0);
     devcon->DrawIndexed(IndexCount, 0,0);
@@ -221,6 +224,9 @@ void Cube::Shutdown()
 
     if(wmp)
         wmp.release();
+
+    if (Transparency)
+        Transparency->Release();
 }
 
 void Cube::SetDevice(ID3D11Device* dev, ID3D11DeviceContext* devcon)
@@ -251,6 +257,8 @@ bool Cube::InitializeTexture()
     hr = dev->CreateSamplerState(&SamplerDesc,&samplerState);
 
     ENDSTR(hr,"Failed to create a sampler state");
+
+    SetBlending();
 
     return true;
 }
@@ -342,6 +350,48 @@ bool Cube::CompileTextureShader()
     ENDSTR(hr, "Failed to create pixel shader!");
 
     return true;
+}
+
+void Cube::SetBlending()
+{
+    D3D11_BLEND_DESC blendDesc;
+    ZeroMemory(&blendDesc,sizeof(D3D11_BLEND_DESC));
+
+    D3D11_RENDER_TARGET_BLEND_DESC renderDesc;
+    ZeroMemory(&renderDesc,sizeof(D3D11_RENDER_TARGET_BLEND_DESC));
+    renderDesc.BlendEnable = true;
+    //Equation for color
+    renderDesc.SrcBlend = D3D11_BLEND_SRC_COLOR;
+    renderDesc.DestBlend = D3D11_BLEND_BLEND_FACTOR;
+    renderDesc.BlendOp = D3D11_BLEND_OP_ADD;
+
+    //Equation for alpha
+    renderDesc.SrcBlendAlpha = D3D11_BLEND_ONE;
+    renderDesc.DestBlendAlpha = D3D11_BLEND_ZERO;
+    renderDesc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+    renderDesc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+    blendDesc.AlphaToCoverageEnable = false;
+    blendDesc.IndependentBlendEnable = false;
+    blendDesc.RenderTarget[0] = renderDesc;
+
+    HRESULT hr = dev->CreateBlendState(&blendDesc,&Transparency);
+
+    if(FAILED(hr))
+        DX_WARN("Failed to create blendstate!");
+
+
+    D3D11_RASTERIZER_DESC rasterDesc;
+    ZeroMemory(&rasterDesc, sizeof(D3D11_RASTERIZER_DESC));
+
+    rasterDesc.CullMode = D3D11_CULL_NONE;
+    rasterDesc.FillMode = D3D11_FILL_SOLID;
+    rasterDesc.FrontCounterClockwise = true;
+    rasterDesc.DepthClipEnable = true;
+
+    
+    dev->CreateRasterizerState(&rasterDesc,&Rasterizer);
+    
 }
 
 bool Cube::CreateInputLayout(D3D11_SUBRESOURCE_DATA* SubData)

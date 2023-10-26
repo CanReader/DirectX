@@ -33,6 +33,8 @@ private:
 	bool CompileColorShader();
 	bool CompileTextureShader();
 
+	void SetBlending();
+
 	bool CreateInputLayout(D3D11_SUBRESOURCE_DATA* SubData);
 	bool CreateBuffers();
 
@@ -52,6 +54,10 @@ private:
 
 	ID3D10Blob* vsBlob;
 	ID3D10Blob* psBlob;
+
+	ID3D11BlendState* Transparency;
+
+	ID3D11RasterizerState* Rasterizer;
 
 	//Constant Buffer
 	XMMATRIX worldMatrix;
